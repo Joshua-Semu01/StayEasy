@@ -5,7 +5,7 @@ import html2canvas from "html2canvas";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type Screen = "home" | "listings" | "details" | "payment" | "confirmation";
+type Screen = "welcome" | "home" | "listings" | "details" | "payment" | "confirmation";
 type Filter = "price" | "distance" | "availability";
 
 interface Hostel {
@@ -28,13 +28,13 @@ interface Hostel {
 const HOSTELS: Hostel[] = [
   {
     id: 1,
-    name: "UCU Gateway Hostel",
+    name: "Normal Hostel Rooms - Mukono",
     price: 50000,
     distance: "0.3 km from UCU",
     available: true,
     rating: 4.5,
     description:
-      "A modern, secure hostel right next to Uganda Christian University. Fully furnished rooms with 24/7 security, reliable Wi-Fi, and clean shared bathrooms. Popular with first-year students.",
+      "Standard and affordable hostel rooms in Mukono for UCU students. Clean, secure, and convenient location near the university. Perfect for students looking for comfortable and budget-friendly accommodation.",
     amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
     images: [
       "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
@@ -46,13 +46,13 @@ const HOSTELS: Hostel[] = [
   },
   {
     id: 2,
-    name: "Mukono Student Hub",
+    name: "Mukono Standard Hostel",
     price: 35000,
     distance: "0.8 km from UCU",
     available: true,
     rating: 4.2,
     description:
-      "Budget-friendly rooms with essential amenities. Great community atmosphere with a shared kitchen, lounge area, and study room. Ideal for students on a tight budget.",
+      "Affordable standard hostel rooms in Mukono town. Great community atmosphere with shared kitchen and study area. Ideal for UCU students on a budget.",
     amenities: ["Wi-Fi", "Security", "Water", "Study Room", "Kitchen"],
     images: [
       "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
@@ -64,13 +64,13 @@ const HOSTELS: Hostel[] = [
   },
   {
     id: 3,
-    name: "Lakeview Residence",
+    name: "Mukono Budget Hostel",
     price: 75000,
     distance: "1.2 km from UCU",
     available: false,
     rating: 4.8,
     description:
-      "Premium student accommodation with lake views. En-suite rooms, high-speed internet, gym access, and a rooftop terrace. Perfect for students who want comfort and style.",
+      "Quality standard hostel accommodation near Lake Victoria in Mukono. Clean rooms with essential amenities. Popular with UCU students who want comfort at reasonable prices.",
     amenities: ["Wi-Fi", "Security", "En-Suite", "Gym", "Rooftop", "Water"],
     images: [
       "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
@@ -82,13 +82,13 @@ const HOSTELS: Hostel[] = [
   },
   {
     id: 4,
-    name: "Canaan Heights",
+    name: "Canaan Hostel - Mukono",
     price: 45000,
     distance: "0.6 km from UCU",
     available: true,
     rating: 4.0,
     description:
-      "Comfortable shared and private rooms in a quiet, safe environment. Close to UCU with easy boda-boda access. Includes a common TV lounge and laundry facilities.",
+      "Comfortable standard hostel rooms in a quiet and safe area in Mukono. Easy access to UCU with convenient transportation options. Includes common areas and laundry facilities.",
     amenities: ["Wi-Fi", "Security", "Water", "Laundry", "TV Lounge"],
     images: [
       "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80",
@@ -252,7 +252,7 @@ function Layout({
         {/* Brand */}
         <div className="px-6 py-6 border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+            <div className="w-10 h-10 bg-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
               <span className="text-white font-black text-lg">S</span>
             </div>
             <div>
@@ -270,7 +270,7 @@ function Layout({
               onClick={() => onNavigate(screen)}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 currentScreen === screen
-                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-900/40"
+                  ? "bg-orange-500 text-white shadow-lg shadow-indigo-900/40"
                   : "text-slate-400 hover:bg-slate-800 hover:text-white"
               }`}
             >
@@ -290,7 +290,7 @@ function Layout({
       {/* ── Mobile Top Bar ── */}
       <header className="lg:hidden bg-slate-900 text-white px-4 py-3 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center">
+          <div className="w-8 h-8 bg-orange-500 rounded-xl flex items-center justify-center">
             <span className="text-white font-black text-sm">S</span>
           </div>
           <span className="font-black text-base">StayEasy</span>
@@ -312,7 +312,7 @@ function Layout({
               onClick={() => { onNavigate(screen); setMobileMenuOpen(false); }}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                 currentScreen === screen
-                  ? "bg-indigo-600 text-white"
+                  ? "bg-orange-500 text-white"
                   : "text-slate-300 hover:bg-slate-700 hover:text-white"
               }`}
             >
@@ -327,6 +327,50 @@ function Layout({
       <main className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
         {children}
       </main>
+    </div>
+  );
+}
+
+// ─── Screen 0: Welcome ───────────────────────────────────────────────────────────
+
+function WelcomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void }) {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 flex flex-col items-center justify-center px-6 relative overflow-hidden">
+      <div className="absolute -top-20 -right-20 w-80 h-80 bg-white/10 rounded-full pointer-events-none" />
+      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/10 rounded-full pointer-events-none" />
+      
+      <div className="relative z-10 text-center max-w-md">
+        <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
+          <span className="text-orange-600 font-black text-4xl">S</span>
+        </div>
+        
+        <h1 className="text-white font-black text-4xl mb-2">StayEasy</h1>
+        <p className="text-orange-100 text-lg font-semibold mb-6">Student Hostels in Mukono</p>
+        
+        <p className="text-white/90 text-base mb-8 leading-relaxed">
+          StayEasy helps UCU students find and book hostels easily, unlike the manual process of moving around looking for rooms.
+        </p>
+        
+        <div className="space-y-4">
+          <button
+            onClick={() => onNavigate("home")}
+            className="w-full py-4 bg-white text-orange-600 font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl active:scale-95 transition-all"
+          >
+            Get Started →
+          </button>
+          
+          <button
+            onClick={() => onNavigate("listings")}
+            className="w-full py-4 bg-transparent border-2 border-white text-white font-bold text-lg rounded-2xl hover:bg-white/10 active:scale-95 transition-all"
+          >
+            Browse Hostels
+          </button>
+        </div>
+        
+        <p className="text-orange-200 text-xs mt-8">
+          Trusted by 500+ UCU students
+        </p>
+      </div>
     </div>
   );
 }
@@ -384,7 +428,7 @@ function HomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void }) {
                 onClick={() => setActiveFilter(activeFilter === f.key ? null : f.key)}
                 className={`flex-1 py-2 rounded-xl text-xs font-semibold transition-all ${
                   activeFilter === f.key
-                    ? "bg-indigo-600 text-white shadow-md"
+                    ? "bg-orange-500 text-white shadow-md"
                     : "bg-slate-100 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600"
                 }`}
               >
@@ -439,12 +483,12 @@ function HomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void }) {
       <div className="px-6 lg:px-12 mt-8 pb-12">
         <button
           onClick={() => onNavigate("listings")}
-          className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-10 rounded-2xl shadow-lg hover:shadow-xl active:scale-95 transition-all text-base"
+          className="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold py-4 px-10 rounded-2xl shadow-lg hover:shadow-xl active:scale-95 transition-all text-base"
         >
-          View All Hostels →
+          Find Your Room →
         </button>
         <p className="text-xs text-slate-400 mt-3">
-          Trusted by 500+ UCU students
+          Don&apos;t miss out - book your hostel today!
         </p>
       </div>
     </div>
@@ -577,7 +621,7 @@ function ListingsScreen({
                   disabled={!hostel.available}
                   className={`w-full mt-3 py-2.5 rounded-xl text-sm font-bold transition-all ${
                     hostel.available
-                      ? "bg-indigo-600 text-white hover:bg-indigo-700 active:scale-95"
+                      ? "bg-orange-500 text-white hover:bg-orange-600 active:scale-95"
                       : "bg-slate-100 text-slate-400 cursor-not-allowed"
                   }`}
                 >
@@ -731,7 +775,7 @@ function DetailsScreen({
             disabled={!hostel.available}
             className={`w-full py-4 rounded-2xl text-base font-black shadow-lg transition-all ${
               hostel.available
-                ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-xl active:scale-95"
+                ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-xl active:scale-95"
                 : "bg-slate-200 text-slate-400 cursor-not-allowed"
             }`}
           >
@@ -919,7 +963,7 @@ function PaymentScreen({
                 {step === 3 && (
                   <button
                     onClick={() => onNavigate("confirmation")}
-                    className="w-full py-4 rounded-2xl text-base font-black bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:shadow-xl active:scale-95 transition-all"
+                    className="w-full py-4 rounded-2xl text-base font-black bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl active:scale-95 transition-all"
                   >
                     Payment Verified ✓ — Continue →
                   </button>
@@ -1159,7 +1203,7 @@ function ConfirmationScreen({
 
               <button
                 onClick={() => onNavigate("home")}
-                className="w-full py-4 rounded-2xl text-base font-black bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:shadow-xl active:scale-95 transition-all"
+                className="w-full py-4 rounded-2xl text-base font-black bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl active:scale-95 transition-all"
               >
                 Go Home
               </button>
@@ -1178,13 +1222,15 @@ function ConfirmationScreen({
 // ─── App Root ─────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [screen, setScreen] = useState<Screen>("home");
+  const [screen, setScreen] = useState<Screen>("welcome");
   const [selectedHostel, setSelectedHostel] = useState<Hostel>(HOSTELS[0]);
 
   const navigate = (s: Screen) => setScreen(s);
 
   const screenContent = (() => {
     switch (screen) {
+      case "welcome":
+        return <WelcomeScreen onNavigate={navigate} />;
       case "home":
         return <HomeScreen onNavigate={navigate} />;
       case "listings":
@@ -1197,6 +1243,10 @@ export default function App() {
         return <ConfirmationScreen hostel={selectedHostel} onNavigate={navigate} />;
     }
   })();
+
+  if (screen === "welcome") {
+    return <WelcomeScreen onNavigate={navigate} />;
+  }
 
   return (
     <Layout currentScreen={screen} onNavigate={navigate}>
