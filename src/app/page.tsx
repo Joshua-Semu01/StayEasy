@@ -335,7 +335,7 @@ function Layout({
 
 function WelcomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 flex flex-col items-center justify-center px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 flex flex-col items-center justify-center px-6 relative overflow-hidden">
       <div className="absolute -top-20 -right-20 w-80 h-80 bg-white/10 rounded-full pointer-events-none" />
       <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/10 rounded-full pointer-events-none" />
       
@@ -354,14 +354,14 @@ function WelcomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void })
         <div className="space-y-4">
           <button
             onClick={() => onNavigate("home")}
-            className="w-full py-4 bg-white text-orange-600 font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl active:scale-95 transition-all"
+            className="w-full py-4 bg-orange-500 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:bg-orange-600 active:scale-95 transition-all"
           >
             Get Started →
           </button>
           
           <button
             onClick={() => onNavigate("listings")}
-            className="w-full py-4 bg-transparent border-2 border-white text-white font-bold text-lg rounded-2xl hover:bg-white/10 active:scale-95 transition-all"
+            className="w-full py-4 bg-orange-500 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:bg-orange-600 active:scale-95 transition-all"
           >
             Browse Hostels
           </button>
