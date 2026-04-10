@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
+import html2canvas from "html2canvas";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -854,6 +855,211 @@ function PaymentScreen({
   );
 }
 
+// ─── Receipt Template (rendered off-screen, captured as image) ───────────────
+
+function ReceiptTemplate({
+  innerRef,
+  hostel,
+  bookingRef,
+  bookingDate,
+}: {
+  innerRef: React.Ref<HTMLDivElement>;
+  hostel: Hostel;
+  bookingRef: string;
+  bookingDate: string;
+}) {
+  return (
+    <div
+      ref={innerRef}
+      style={{
+        position: "fixed",
+        top: "-9999px",
+        left: "-9999px",
+        width: "360px",
+        backgroundColor: "#ffffff",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+        padding: "0",
+        borderRadius: "0",
+        overflow: "hidden",
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          background: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)",
+          padding: "28px 24px 20px",
+          color: "#fff",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
+          <div
+            style={{
+              width: "36px",
+              height: "36px",
+              backgroundColor: "#fff",
+              borderRadius: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <span style={{ color: "#4f46e5", fontWeight: 900, fontSize: "18px" }}>S</span>
+          </div>
+          <div>
+            <div style={{ fontWeight: 900, fontSize: "18px", letterSpacing: "-0.5px" }}>StayEasy</div>
+            <div style={{ fontSize: "11px", opacity: 0.8 }}>Student Hostel Booking · Mukono</div>
+          </div>
+        </div>
+        <div style={{ fontSize: "13px", fontWeight: 700, opacity: 0.9 }}>OFFICIAL BOOKING RECEIPT</div>
+      </div>
+
+      {/* Stamp area */}
+      <div
+        style={{
+          backgroundColor: "#f0fdf4",
+          borderBottom: "2px dashed #86efac",
+          borderTop: "2px dashed #86efac",
+          padding: "12px 24px",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+        }}
+      >
+        <div
+          style={{
+            width: "36px",
+            height: "36px",
+            backgroundColor: "#10b981",
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+          }}
+        >
+          <span style={{ color: "#fff", fontWeight: 900, fontSize: "18px" }}>✓</span>
+        </div>
+        <div>
+          <div style={{ fontWeight: 800, color: "#065f46", fontSize: "14px" }}>Payment Confirmed</div>
+          <div style={{ color: "#059669", fontSize: "12px" }}>Booking Ref: #{bookingRef}</div>
+        </div>
+      </div>
+
+      {/* Booking Details */}
+      <div style={{ padding: "20px 24px" }}>
+        <div style={{ fontSize: "11px", fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "12px" }}>
+          Booking Details
+        </div>
+        {[
+          { label: "Hostel Name", value: hostel.name },
+          { label: "Location", value: hostel.location },
+          { label: "Duration", value: "1 Month" },
+          { label: "Check-in Date", value: bookingDate },
+          { label: "Payment Method", value: "MTN Mobile Money (*165#)" },
+        ].map(({ label, value }) => (
+          <div
+            key={label}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              padding: "8px 0",
+              borderBottom: "1px solid #f1f5f9",
+            }}
+          >
+            <span style={{ color: "#64748b", fontSize: "12px" }}>{label}</span>
+            <span style={{ color: "#1e293b", fontSize: "12px", fontWeight: 600, textAlign: "right", maxWidth: "180px" }}>{value}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Amount box */}
+      <div
+        style={{
+          margin: "0 24px",
+          backgroundColor: "#f8fafc",
+          border: "1px solid #e2e8f0",
+          borderRadius: "12px",
+          padding: "16px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <span style={{ color: "#475569", fontSize: "13px", fontWeight: 600 }}>Total Amount Paid</span>
+        <span style={{ color: "#4f46e5", fontSize: "22px", fontWeight: 900 }}>
+          UGX {hostel.price.toLocaleString()}
+        </span>
+      </div>
+
+      {/* Status */}
+      <div style={{ padding: "16px 24px" }}>
+        <div
+          style={{
+            backgroundColor: "#d1fae5",
+            border: "1px solid #6ee7b7",
+            borderRadius: "8px",
+            padding: "10px 14px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <span style={{ color: "#065f46", fontSize: "12px", fontWeight: 600 }}>Payment Status</span>
+          <span
+            style={{
+              backgroundColor: "#10b981",
+              color: "#fff",
+              fontSize: "11px",
+              fontWeight: 700,
+              padding: "3px 10px",
+              borderRadius: "100px",
+            }}
+          >
+            ✓ PAID
+          </span>
+        </div>
+      </div>
+
+      {/* Dashed divider */}
+      <div style={{ borderTop: "2px dashed #e2e8f0", margin: "4px 24px 16px" }} />
+
+      {/* Student note */}
+      <div style={{ padding: "0 24px 16px" }}>
+        <div style={{ fontSize: "11px", color: "#94a3b8", lineHeight: 1.6 }}>
+          This receipt serves as proof of booking for{" "}
+          <strong style={{ color: "#475569" }}>{hostel.name}</strong> via StayEasy.
+          Present this receipt to the hostel management upon arrival.
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div
+        style={{
+          backgroundColor: "#1e293b",
+          padding: "14px 24px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <span style={{ color: "#94a3b8", fontSize: "10px" }}>stayeasy.app · Mukono, Uganda</span>
+        <span style={{ color: "#94a3b8", fontSize: "10px" }}>Ref: #{bookingRef}</span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Download Icon ────────────────────────────────────────────────────────────
+
+function IconDownload() {
+  return (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+    </svg>
+  );
+}
+
 // ─── Screen 5: Confirmation ───────────────────────────────────────────────────
 
 function ConfirmationScreen({
@@ -864,9 +1070,39 @@ function ConfirmationScreen({
   onNavigate: (screen: Screen) => void;
 }) {
   const [ref] = useState(() => `SE${hostel.id}${Math.floor(Math.random() * 900000 + 100000)}`);
+  const [bookingDate] = useState(() => new Date().toLocaleDateString("en-UG", { year: "numeric", month: "long", day: "numeric" }));
+  const [downloading, setDownloading] = useState(false);
+  const receiptRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = useCallback(async () => {
+    if (!receiptRef.current) return;
+    setDownloading(true);
+    try {
+      const canvas = await html2canvas(receiptRef.current, {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        logging: false,
+      });
+      const link = document.createElement("a");
+      link.download = `StayEasy-Receipt-${ref}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } finally {
+      setDownloading(false);
+    }
+  }, [ref]);
 
   return (
     <PhoneFrame>
+      {/* Hidden receipt for capture */}
+      <ReceiptTemplate
+        innerRef={receiptRef}
+        hostel={hostel}
+        bookingRef={ref}
+        bookingDate={bookingDate}
+      />
+
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 bg-gradient-to-b from-white to-emerald-50">
         {/* Success Icon */}
         <div className="relative mb-6">
@@ -884,7 +1120,7 @@ function ConfirmationScreen({
           Booking Successful!
         </h2>
         <p className="text-emerald-600 font-semibold text-sm mb-6">
-          Welcome to {hostel.name} 🎉
+          Welcome to {hostel.name}
         </p>
 
         {/* Booking Details Card */}
@@ -901,6 +1137,10 @@ function ConfirmationScreen({
             <div className="flex justify-between items-center">
               <span className="text-sm text-slate-500">Location</span>
               <span className="text-sm text-slate-700">{hostel.location}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-slate-500">Date</span>
+              <span className="text-sm text-slate-700">{bookingDate}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-sm text-slate-500">Amount Paid</span>
@@ -922,7 +1162,7 @@ function ConfirmationScreen({
         </div>
 
         {/* SMS Preview */}
-        <div className="w-full bg-slate-800 rounded-2xl p-4 mb-6">
+        <div className="w-full bg-slate-800 rounded-2xl p-4 mb-4">
           <div className="flex items-center gap-2 mb-2">
             <IconMessage />
             <p className="text-slate-300 text-xs font-bold">SMS Sent to Your Phone</p>
@@ -932,16 +1172,42 @@ function ConfirmationScreen({
           </p>
         </div>
 
+        {/* Download Receipt Button */}
+        <button
+          onClick={handleDownload}
+          disabled={downloading}
+          className={`w-full py-3.5 rounded-2xl text-sm font-bold mb-3 flex items-center justify-center gap-2 transition-all border-2 ${
+            downloading
+              ? "bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed"
+              : "bg-white border-emerald-500 text-emerald-600 hover:bg-emerald-50 active:scale-95 shadow-sm"
+          }`}
+        >
+          {downloading ? (
+            <>
+              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+              Generating Receipt...
+            </>
+          ) : (
+            <>
+              <IconDownload />
+              Download Receipt (PNG)
+            </>
+          )}
+        </button>
+
         {/* Go Home Button */}
         <button
           onClick={() => onNavigate("home")}
           className="w-full py-4 rounded-2xl text-base font-black bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:shadow-xl active:scale-95 transition-all"
         >
-          ← Go Home
+          Go Home
         </button>
 
         <p className="text-xs text-slate-400 mt-3 text-center">
-          Check your SMS for booking details
+          Save your receipt as proof of booking
         </p>
       </div>
     </PhoneFrame>
