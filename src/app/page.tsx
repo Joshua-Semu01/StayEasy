@@ -713,11 +713,27 @@ function ListingsScreen({
 function DetailsScreen({
   hostel,
   onNavigate,
+  studentName,
+  setStudentName,
 }: {
   hostel: Hostel;
   onNavigate: (screen: Screen) => void;
+  studentName: string;
+  setStudentName: (name: string) => void;
 }) {
   const [activeImg, setActiveImg] = useState(0);
+
+  const handleBookNow = () => {
+    if (!studentName.trim()) {
+      const name = prompt("Please enter your name to continue with booking:");
+      if (name && name.trim().length >= 2) {
+        setStudentName(name.trim());
+        onNavigate("payment");
+      }
+      return;
+    }
+    onNavigate("payment");
+  };
 
   return (
     <div className="flex flex-col flex-1">
@@ -843,7 +859,7 @@ function DetailsScreen({
 
           {/* CTA */}
           <button
-            onClick={() => onNavigate("payment")}
+            onClick={handleBookNow}
             disabled={!hostel.available}
             className={`w-full py-4 rounded-2xl text-base font-black shadow-lg transition-all ${
               hostel.available
@@ -864,16 +880,19 @@ function DetailsScreen({
 function PaymentScreen({
   hostel,
   onNavigate,
+  studentName,
 }: {
   hostel: Hostel;
   onNavigate: (screen: Screen) => void;
+  studentName: string;
 }) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [phone, setPhone] = useState("");
+  const [name, setName] = useState(studentName);
   const [confirmed, setConfirmed] = useState(false);
 
   const handleConfirm = () => {
-    if (phone.length < 10) return;
+    if (phone.length < 10 || name.trim().length < 2) return;
     setStep(2);
     setTimeout(() => setStep(3), 2000);
   };
@@ -986,6 +1005,17 @@ function PaymentScreen({
             <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col justify-between">
               <div>
                 <label className="text-xs font-bold text-slate-600 uppercase tracking-wide block mb-2">
+                  Student Name
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+                  placeholder="Enter your full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                
+                <label className="text-xs font-bold text-slate-600 uppercase tracking-wide block mb-2 mt-4">
                   Your Mobile Money Number
                 </label>
                 <input
@@ -1013,9 +1043,9 @@ function PaymentScreen({
                 {step === 1 && (
                   <button
                     onClick={handleConfirm}
-                    disabled={phone.length < 10}
+                    disabled={phone.length < 10 || name.trim().length < 2}
                     className={`w-full py-4 rounded-2xl text-base font-black shadow-lg transition-all ${
-                      phone.length >= 10
+                      phone.length >= 10 && name.trim().length >= 2
                         ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:shadow-xl active:scale-95"
                         : "bg-slate-200 text-slate-400 cursor-not-allowed"
                     }`}
@@ -1296,6 +1326,7 @@ function ConfirmationScreen({
 export default function App() {
   const [screen, setScreen] = useState<Screen>("welcome");
   const [selectedHostel, setSelectedHostel] = useState<Hostel>(HOSTELS[0]);
+  const [studentName, setStudentName] = useState("");
 
   const navigate = (s: Screen) => setScreen(s);
 
@@ -1308,9 +1339,9 @@ export default function App() {
       case "listings":
         return <ListingsScreen onNavigate={navigate} onSelectHostel={setSelectedHostel} />;
       case "details":
-        return <DetailsScreen hostel={selectedHostel} onNavigate={navigate} />;
+        return <DetailsScreen hostel={selectedHostel} onNavigate={navigate} studentName={studentName} setStudentName={setStudentName} />;
       case "payment":
-        return <PaymentScreen hostel={selectedHostel} onNavigate={navigate} />;
+        return <PaymentScreen hostel={selectedHostel} onNavigate={navigate} studentName={studentName} />;
       case "confirmation":
         return <ConfirmationScreen hostel={selectedHostel} onNavigate={navigate} />;
     }
