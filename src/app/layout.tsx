@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Template",
-  description: "A minimal Next.js starter template",
+  title: "StayEasy - Student Hostel Booking in Mukono",
+  description: "Find and book affordable student hostels near UCU Mukono. Simple, fast, and student-friendly hostel booking.",
 };
 
 export default function RootLayout({
