@@ -29,7 +29,7 @@ const HOSTELS: Hostel[] = [
   {
     id: 1,
     name: "Normal Hostel Rooms - Mukono",
-    price: 800000,
+    price: 1000000,
     distance: "0.3 km from UCU",
     available: true,
     rating: 4.5,
@@ -47,7 +47,7 @@ const HOSTELS: Hostel[] = [
   {
     id: 2,
     name: "Mukono Standard Hostel",
-    price: 1000000,
+    price: 1500000,
     distance: "0.8 km from UCU",
     available: true,
     rating: 4.2,
@@ -83,7 +83,7 @@ const HOSTELS: Hostel[] = [
   {
     id: 4,
     name: "Canaan Hostel - Mukono",
-    price: 1200000,
+    price: 1000000,
     distance: "0.6 km from UCU",
     available: true,
     rating: 4.0,
@@ -283,7 +283,7 @@ function Layout({
         {/* Footer info */}
         <div className="px-6 py-5 border-t border-slate-800">
           <p className="text-slate-500 text-xs">Trusted by 500+ UCU students</p>
-          <p className="text-slate-600 text-xs mt-1">© 2024 StayEasy</p>
+          <p className="text-slate-600 text-xs mt-1">© 2026 StayEasy</p>
         </div>
       </aside>
 
@@ -901,7 +901,7 @@ function PaymentScreen({
                     </div>
                   </div>
                   <p className="text-slate-300 text-sm leading-relaxed">
-                    &quot;Your StayEasy booking is confirmed. Hostel: {hostel.name}. Amount: UGX {hostel.price.toLocaleString()}. Ref: SE{hostel.id}2024. Thank you!&quot;
+                    &quot;Your StayEasy booking is confirmed. Hostel: {hostel.name}. Amount: UGX {hostel.price.toLocaleString()}. Ref: SE{hostel.id}2026. Thank you!&quot;
                   </p>
                 </div>
                 <p className="text-xs text-slate-500 text-center">
