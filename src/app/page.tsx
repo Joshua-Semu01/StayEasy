@@ -29,7 +29,7 @@ const HOSTELS: Hostel[] = [
   {
     id: 1,
     name: "Normal Hostel Rooms - Mukono",
-    price: 50000,
+    price: 1000000,
     distance: "0.3 km from UCU",
     available: true,
     rating: 4.5,
@@ -47,7 +47,7 @@ const HOSTELS: Hostel[] = [
   {
     id: 2,
     name: "Mukono Standard Hostel",
-    price: 35000,
+    price: 1500000,
     distance: "0.8 km from UCU",
     available: true,
     rating: 4.2,
@@ -65,7 +65,7 @@ const HOSTELS: Hostel[] = [
   {
     id: 3,
     name: "Mukono Budget Hostel",
-    price: 75000,
+    price: 1500000,
     distance: "1.2 km from UCU",
     available: false,
     rating: 4.8,
@@ -83,7 +83,7 @@ const HOSTELS: Hostel[] = [
   {
     id: 4,
     name: "Canaan Hostel - Mukono",
-    price: 45000,
+    price: 1000000,
     distance: "0.6 km from UCU",
     available: true,
     rating: 4.0,
@@ -599,7 +599,7 @@ function ListingsScreen({
                     <p className="text-indigo-600 font-black text-base">
                       UGX {hostel.price.toLocaleString()}
                     </p>
-                    <p className="text-slate-400 text-xs">/month</p>
+                    <p className="text-slate-400 text-xs">/semester</p>
                   </div>
                 </div>
                 {/* Amenities */}
@@ -708,7 +708,7 @@ function DetailsScreen({
               <p className="text-indigo-600 font-black text-2xl">
                 UGX {hostel.price.toLocaleString()}
               </p>
-              <p className="text-slate-400 text-xs">/month</p>
+              <p className="text-slate-400 text-xs">/semester</p>
             </div>
           </div>
 
@@ -829,7 +829,7 @@ function PaymentScreen({
                 {[
                   { label: "Hostel", value: hostel.name, bold: true },
                   { label: "Location", value: hostel.location },
-                  { label: "Duration", value: "1 month" },
+                  { label: "Duration", value: "1 semester" },
                 ].map(({ label, value, bold }) => (
                   <div key={label} className="flex justify-between">
                     <span className="text-sm text-slate-500">{label}</span>
