@@ -572,12 +572,25 @@ function HomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void }) {
 function ListingsScreen({
   onNavigate,
   onSelectHostel,
+  studentName,
+  setStudentName,
 }: {
   onNavigate: (screen: Screen) => void;
   onSelectHostel: (hostel: Hostel) => void;
+  studentName: string;
+  setStudentName: (name: string) => void;
 }) {
   const [activeFilter, setActiveFilter] = useState<Filter | null>(null);
   const [searchValue, setSearchValue] = useState("");
+
+  const handleViewDetails = (hostel: Hostel) => {
+    if (!studentName || !studentName.trim()) {
+      alert("Please enter your name in the field above first, then click View Details");
+      return;
+    }
+    onSelectHostel(hostel);
+    onNavigate("details");
+  }
 
   const sortedHostels = [...HOSTELS]
     .sort((a, b) => {
@@ -603,6 +616,21 @@ function ListingsScreen({
           </span>
         </div>
         <h2 className="text-white font-bold text-2xl lg:text-3xl mb-4">Hostels in Mukono</h2>
+        
+        {/* Student Name Input */}
+        <div className="mb-4">
+          <label className="text-xs font-semibold text-orange-200 uppercase tracking-wide block mb-1">
+            Enter Your Name
+          </label>
+          <input
+            type="text"
+            className="w-full bg-white/20 border border-white/30 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/60 outline-none focus:bg-white/30 focus:border-white"
+            placeholder="Enter your full name"
+            value={studentName}
+            onChange={(e) => setStudentName(e.target.value)}
+          />
+        </div>
+        
         <div className="flex flex-col sm:flex-row gap-3 max-w-2xl">
           {/* Search */}
           <div className="relative flex-1">
@@ -686,10 +714,7 @@ function ListingsScreen({
                   )}
                 </div>
                 <button
-                  onClick={() => {
-                    onSelectHostel(hostel);
-                    onNavigate("details");
-                  }}
+                  onClick={() => handleViewDetails(hostel)}
                   disabled={!hostel.available}
                   className={`w-full mt-3 py-2.5 rounded-xl text-sm font-bold transition-all ${
                     hostel.available
@@ -724,14 +749,6 @@ function DetailsScreen({
   const [activeImg, setActiveImg] = useState(0);
 
   const handleBookNow = () => {
-    if (!studentName.trim()) {
-      const name = prompt("Please enter your name to continue with booking:");
-      if (name && name.trim().length >= 2) {
-        setStudentName(name.trim());
-        onNavigate("payment");
-      }
-      return;
-    }
     onNavigate("payment");
   };
 
@@ -1337,7 +1354,7 @@ export default function App() {
       case "home":
         return <HomeScreen onNavigate={navigate} />;
       case "listings":
-        return <ListingsScreen onNavigate={navigate} onSelectHostel={setSelectedHostel} />;
+        return <ListingsScreen onNavigate={navigate} onSelectHostel={setSelectedHostel} studentName={studentName} setStudentName={setStudentName} />;
       case "details":
         return <DetailsScreen hostel={selectedHostel} onNavigate={navigate} studentName={studentName} setStudentName={setStudentName} />;
       case "payment":
