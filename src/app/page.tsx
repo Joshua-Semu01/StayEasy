@@ -29,7 +29,7 @@ const HOSTELS: Hostel[] = [
   {
     id: 1,
     name: "Normal Hostel Rooms - Mukono",
-    price: 1000000,
+    price: 800000,
     distance: "0.3 km from UCU",
     available: true,
     rating: 4.5,
@@ -47,7 +47,7 @@ const HOSTELS: Hostel[] = [
   {
     id: 2,
     name: "Mukono Standard Hostel",
-    price: 1500000,
+    price: 1000000,
     distance: "0.8 km from UCU",
     available: true,
     rating: 4.2,
@@ -83,7 +83,7 @@ const HOSTELS: Hostel[] = [
   {
     id: 4,
     name: "Canaan Hostel - Mukono",
-    price: 1000000,
+    price: 1200000,
     distance: "0.6 km from UCU",
     available: true,
     rating: 4.0,
