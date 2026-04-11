@@ -225,7 +225,10 @@ export default function StudentDashboard() {
   const handlePayment = () => {
     if (studentName && studentPhone) {
       setPaymentStep(2);
-      setTimeout(() => setPaymentStep(4), 2000);
+      setTimeout(() => {
+        setPaymentStep(4);
+        setView("success");
+      }, 2000);
     }
   };
 
