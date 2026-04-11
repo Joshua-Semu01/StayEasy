@@ -73,7 +73,7 @@ const HOSTELS: Hostel[] = [
     rating: 4.0,
     description: "Comfortable standard hostel rooms in a quiet and safe area in Mukono. Easy access to UCU with convenient transportation.",
     amenities: ["Wi-Fi", "Security", "Water", "Laundry", "TV Lounge"],
-    images: ["https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800"],
+    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/798bcdc3-ebab-4233-9700-7610e91cfd80.jpg"],
     location: "Mukono, Canaan Road",
     rooms: 6,
     totalRooms: 18,
