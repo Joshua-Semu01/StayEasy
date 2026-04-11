@@ -510,6 +510,12 @@ export default function StudentDashboard() {
 
       <main className="flex-1 p-6">
         <div className="max-w-5xl mx-auto">
+          {/* UVP Section */}
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 mb-6 text-center">
+            <h2 className="text-white font-bold text-xl mb-2">Find and Book Trusted Hostels in Mukono Easily</h2>
+            <p className="text-blue-100 text-sm">Without the stress of moving around physically.</p>
+          </div>
+
           <div className="relative mb-6">
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
               <IconSearch />
