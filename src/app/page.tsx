@@ -362,6 +362,8 @@ function WelcomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void })
           StayEasy helps UCU students find and book hostels easily, unlike the manual process of moving around looking for rooms.
         </p>
         
+        <p className="text-orange-300 font-medium text-sm mb-6">Find Your Perfect Stay, the Easy Way.</p>
+        
         <div className="space-y-4">
           <button
             onClick={() => onNavigate("home")}

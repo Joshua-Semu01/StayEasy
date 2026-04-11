@@ -1,30 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
-  <!-- Dark Background -->
-  <rect width="400" height="300" fill="#1F2937"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="400" height="350">
+  <rect width="400" height="350" fill="#1F2937"/>
   
-  <!-- Logo Icon - Bed/Hostel Building -->
-  <g transform="translate(80, 60)">
-    <!-- Building/Hostel Icon -->
-    <rect x="10" y="30" width="80" height="60" rx="8" fill="#3B82F6"/>
-    <rect x="20" y="50" width="20" height="20" rx="4" fill="#FFFFFF" opacity="0.9"/>
-    <rect x="50" y="50" width="20" height="20" rx="4" fill="#FFFFFF" opacity="0.9"/>
-    <!-- Roof -->
-    <polygon points="50,10 10,30 90,30" fill="#3B82F6"/>
-    <!-- Pillow -->
-    <rect x="30" y="65" width="40" height="12" rx="3" fill="#10B981"/>
-    <!-- Window dots -->
-    <circle cx="30" cy="25" r="4" fill="#FFFFFF"/>
-    <circle cx="50" cy="25" r="4" fill="#FFFFFF"/>
-    <circle cx="70" cy="25" r="4" fill="#FFFFFF"/>
+  <g transform="translate(80, 50)">
+    <circle cx="50" cy="50" r="45" fill="#3B82F6"/>
+    <rect x="20" y="45" width="60" height="35" rx="5" fill="#ffffff"/>
+    <rect x="26" y="55" width="15" height="15" rx="3" fill="#3B82F6"/>
+    <rect x="59" y="55" width="15" height="15" rx="3" fill="#3B82F6"/>
+    <polygon points="50,22 20,45 80,45" fill="#10B981"/>
+    <rect x="35" y="65" width="30" height="10" rx="3" fill="#F59E0B"/>
   </g>
   
-  <!-- Brand Name -->
   <text x="80" y="175" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" fill="#FFFFFF">Stay</text>
   <text x="195" y="175" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" fill="#3B82F6">Easy</text>
   
-  <!-- Slogan -->
-  <text x="200" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#9CA3AF" text-anchor="middle">Find Your Perfect Stay, the Easy Way.</text>
-  
-  <!-- Decorative accent -->
-  <rect x="80" y="225" width="240" height="3" rx="1.5" fill="#F59E0B"/>
+  <text x="200" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#F59E0B" text-anchor="middle">Find Your Perfect Stay, the Easy Way.</text>
 </svg>
