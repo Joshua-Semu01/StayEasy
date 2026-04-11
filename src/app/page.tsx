@@ -28,7 +28,7 @@ interface Hostel {
 const HOSTELS: Hostel[] = [
   {
     id: 1,
-    name: "Normal Hostel Rooms - Mukono",
+    name: "Carleton Hostel",
     price: 1000000,
     distance: "0.3 km from UCU",
     available: true,
@@ -37,7 +37,7 @@ const HOSTELS: Hostel[] = [
       "Standard and affordable hostel rooms in Mukono for UCU students. Clean, secure, and convenient location near the university. Perfect for students looking for comfortable and budget-friendly accommodation.",
     amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
     images: [
-      "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
+      "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/c31eb9ce-fc72-45fa-b3e9-ddb722e4a4b2.jpg",
       "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
     ],
     location: "Mukono, near UCU Main Gate",
