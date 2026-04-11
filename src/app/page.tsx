@@ -229,6 +229,17 @@ function AvailabilityBadge({ available }: { available: boolean }) {
 
 // ─── Responsive Layout Shell ──────────────────────────────────────────────────
 
+const IconLogo = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className}>
+    <circle cx="50" cy="50" r="45" fill="#3B82F6" />
+    <rect x="20" y="45" width="60" height="35" rx="5" fill="#ffffff" />
+    <rect x="26" y="55" width="15" height="15" rx="3" fill="#3B82F6" />
+    <rect x="59" y="55" width="15" height="15" rx="3" fill="#3B82F6" />
+    <polygon points="50,22 20,45 80,45" fill="#10B981" />
+    <rect x="35" y="65" width="30" height="10" rx="3" fill="#F59E0B" />
+  </svg>
+);
+
 const NAV_ITEMS: { screen: Screen; label: string; icon: () => React.ReactElement }[] = [
   { screen: "home", label: "Home", icon: IconHome2 },
   { screen: "listings", label: "Browse Hostels", icon: IconBuilding },
@@ -252,8 +263,8 @@ function Layout({
         {/* Brand */}
         <div className="px-6 py-6 border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-black text-lg">S</span>
+            <div className="w-10 h-10 flex-shrink-0">
+              <IconLogo className="w-full h-full" />
             </div>
             <div>
               <h1 className="text-white font-black text-lg tracking-tight">StayEasy</h1>
@@ -290,8 +301,8 @@ function Layout({
       {/* ── Mobile Top Bar ── */}
       <header className="lg:hidden bg-slate-900 text-white px-4 py-3 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-orange-500 rounded-xl flex items-center justify-center">
-            <span className="text-white font-black text-sm">S</span>
+          <div className="w-8 h-8 flex-shrink-0">
+            <IconLogo className="w-full h-full" />
           </div>
           <span className="font-black text-base">StayEasy</span>
         </div>
@@ -340,12 +351,12 @@ function WelcomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void })
       <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/10 rounded-full pointer-events-none" />
       
       <div className="relative z-10 text-center max-w-md">
-        <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
-          <span className="text-orange-600 font-black text-4xl">S</span>
+        <div className="w-28 h-28 mx-auto mb-6">
+          <IconLogo className="w-full h-full" />
         </div>
         
         <h1 className="text-white font-black text-4xl mb-2">StayEasy</h1>
-        <p className="text-orange-100 text-lg font-semibold mb-6">Student Hostels in Mukono</p>
+        <p className="text-blue-100 text-lg font-semibold mb-6">Student Hostels in Mukono</p>
         
         <p className="text-white/90 text-base mb-8 leading-relaxed">
           StayEasy helps UCU students find and book hostels easily, unlike the manual process of moving around looking for rooms.

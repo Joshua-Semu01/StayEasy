@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#F9FAFB"/>
+  
+  <!-- Logo Icon - Bed/Hostel Building -->
+  <g transform="translate(80, 60)">
+    <!-- Building/Hostel Icon -->
+    <rect x="10" y="30" width="80" height="60" rx="8" fill="#3B82F6"/>
+    <rect x="20" y="50" width="20" height="20" rx="4" fill="#F9FAFB" opacity="0.9"/>
+    <rect x="50" y="50" width="20" height="20" rx="4" fill="#F9FAFB" opacity="0.9"/>
+    <!-- Roof -->
+    <polygon points="50,10 10,30 90,30" fill="#3B82F6"/>
+    <!-- Pillow -->
+    <rect x="30" y="65" width="40" height="12" rx="3" fill="#10B981"/>
+    <!-- Window dots -->
+    <circle cx="30" cy="25" r="4" fill="#F9FAFB"/>
+    <circle cx="50" cy="25" r="4" fill="#F9FAFB"/>
+    <circle cx="70" cy="25" r="4" fill="#F9FAFB"/>
+  </g>
+  
+  <!-- Brand Name -->
+  <text x="80" y="175" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" fill="#1F2937">Stay</text>
+  <text x="195" y="175" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" fill="#3B82F6">Easy</text>
+  
+  <!-- Slogan -->
+  <text x="200" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#6B7280" text-anchor="middle">Find Your Perfect Stay, the Easy Way.</text>
+  
+  <!-- Decorative accent -->
+  <rect x="80" y="225" width="240" height="3" rx="1.5" fill="#F59E0B"/>
+</svg>
