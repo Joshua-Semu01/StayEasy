@@ -20,7 +20,7 @@ function RoleSelectionScreen() {
         
         <div className="space-y-4">
           <Link
-            href="/admin"
+            href="/admin/login"
             className="w-full block py-5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:from-orange-600 hover:to-orange-700 active:scale-95 transition-all"
           >
             Admin Dashboard
