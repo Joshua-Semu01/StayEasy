@@ -356,13 +356,15 @@ function WelcomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void })
         </div>
         
         <h1 className="text-white font-black text-4xl mb-2">StayEasy</h1>
-        <p className="text-blue-100 text-lg font-semibold mb-6">Student Hostels in Mukono</p>
+        <p className="text-blue-100 text-lg font-semibold mb-2">Student Hostels in Mukono</p>
         
-        <p className="text-white/90 text-base mb-8 leading-relaxed">
+        <p className="text-white/90 text-base mb-4 leading-relaxed">
           StayEasy helps UCU students find and book hostels easily, unlike the manual process of moving around looking for rooms.
         </p>
         
-        <p className="text-orange-300 font-medium text-sm mb-6">Find Your Perfect Stay, the Easy Way.</p>
+        <div className="bg-orange-500/20 border border-orange-400/50 rounded-xl px-4 py-3 mb-6">
+          <p className="text-orange-300 font-bold text-lg">Find Your Perfect Stay, the Easy Way.</p>
+        </div>
         
         <div className="space-y-4">
           <button
