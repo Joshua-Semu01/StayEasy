@@ -17,6 +17,9 @@ interface Hostel {
   location: string;
   rooms: number;
   totalRooms: number;
+  custodianName: string;
+  custodianUsername: string;
+  custodianPassword: string;
 }
 
 const INITIAL_HOSTELS: Hostel[] = [
@@ -33,6 +36,9 @@ const INITIAL_HOSTELS: Hostel[] = [
     location: "Mukono, near UCU Main Gate",
     rooms: 4,
     totalRooms: 20,
+    custodianName: "Mr. John Odea",
+    custodianUsername: "carleton",
+    custodianPassword: "carleton123",
   },
   {
     id: 2,
@@ -47,6 +53,9 @@ const INITIAL_HOSTELS: Hostel[] = [
     location: "Mukono Town, 5 min walk to UCU",
     rooms: 2,
     totalRooms: 15,
+    custodianName: "Mrs. Sarah Akello",
+    custodianUsername: "premium",
+    custodianPassword: "premium123",
   },
 ];
 
@@ -68,6 +77,9 @@ export default function AdminDashboard() {
     totalRooms: "",
     amenities: [] as string[],
     imageUrl: "",
+    custodianName: "",
+    custodianUsername: "",
+    custodianPassword: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -87,6 +99,8 @@ export default function AdminDashboard() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    const existingHostel = editingId ? hostels.find(h => h.id === editingId) : null;
+    
     const newHostel: Hostel = {
       id: editingId || nextId++,
       name: formData.name,
@@ -95,11 +109,14 @@ export default function AdminDashboard() {
       location: formData.location,
       description: formData.description,
       totalRooms: parseInt(formData.totalRooms) || 0,
-      rooms: editingId ? hostels.find(h => h.id === editingId)?.rooms || 0 : 0,
+      rooms: existingHostel?.rooms || 0,
       available: true,
       rating: 4.0,
       amenities: formData.amenities,
       images: formData.imageUrl ? [formData.imageUrl] : ["https://images.unsplash.com/photo-1555854877-bab0e564d8e5?w=800"],
+      custodianName: formData.custodianName,
+      custodianUsername: formData.custodianUsername,
+      custodianPassword: formData.custodianPassword,
     };
 
     if (editingId) {
@@ -122,6 +139,9 @@ export default function AdminDashboard() {
       totalRooms: "",
       amenities: [],
       imageUrl: "",
+      custodianName: "",
+      custodianUsername: "",
+      custodianPassword: "",
     });
     setShowAddForm(false);
     setEditingId(null);
@@ -137,6 +157,9 @@ export default function AdminDashboard() {
       totalRooms: hostel.totalRooms.toString(),
       amenities: hostel.amenities,
       imageUrl: hostel.images[0] || "",
+      custodianName: hostel.custodianName || "",
+      custodianUsername: hostel.custodianUsername || "",
+      custodianPassword: hostel.custodianPassword || "",
     });
     setEditingId(hostel.id);
     setShowAddForm(true);
@@ -309,6 +332,44 @@ export default function AdminDashboard() {
                           {amenity}
                         </button>
                       ))}
+                    </div>
+                  </div>
+                  <div className="border-t border-slate-200 pt-4">
+                    <h4 className="text-sm font-bold text-slate-700 mb-3">Custodian Details</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-600 mb-1">Custodian Name</label>
+                        <input
+                          type="text"
+                          name="custodianName"
+                          value={formData.custodianName}
+                          onChange={handleInputChange}
+                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400"
+                          placeholder="e.g. Mr. John Odea"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-600 mb-1">Username</label>
+                        <input
+                          type="text"
+                          name="custodianUsername"
+                          value={formData.custodianUsername}
+                          onChange={handleInputChange}
+                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400"
+                          placeholder="e.g. carleton"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-600 mb-1">Password</label>
+                        <input
+                          type="password"
+                          name="custodianPassword"
+                          value={formData.custodianPassword}
+                          onChange={handleInputChange}
+                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400"
+                          placeholder="Password"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="flex gap-3 pt-4">

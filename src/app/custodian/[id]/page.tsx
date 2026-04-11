@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 
 interface Room {
   id: number;
@@ -20,33 +21,87 @@ interface Room {
 interface Hostel {
   id: number;
   name: string;
+  price: number;
+  distance: string;
+  available: boolean;
+  rating: number;
+  description: string;
+  amenities: string[];
+  images: string[];
+  location: string;
+  rooms: number;
   totalRooms: number;
-  available: number;
+  custodianName: string;
+  custodianUsername: string;
+  custodianPassword: string;
 }
 
-const INITIAL_HOSTELS: Hostel[] = [
-  { id: 1, name: "Carleton Hostel", totalRooms: 20, available: 4 },
-  { id: 2, name: "Premium Hostel", totalRooms: 15, available: 2 },
+const HOSTELS: Hostel[] = [
+  {
+    id: 1,
+    name: "Carleton Hostel",
+    price: 1000000,
+    distance: "0.3 km from UCU",
+    available: true,
+    rating: 4.5,
+    description: "Standard and affordable hostel rooms in Mukono for UCU students.",
+    amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
+    images: ["https://images.unsplash.com/photo-1555854877-bab0e564d8e5?w=800"],
+    location: "Mukono, near UCU Main Gate",
+    rooms: 4,
+    totalRooms: 20,
+    custodianName: "Mr. John Odea",
+    custodianUsername: "carleton",
+    custodianPassword: "carleton123",
+  },
+  {
+    id: 2,
+    name: "Premium Hostel",
+    price: 1500000,
+    distance: "0.8 km from UCU",
+    available: true,
+    rating: 4.2,
+    description: "Affordable standard hostel rooms in Mukono town.",
+    amenities: ["Wi-Fi", "Security", "Water", "Study Room", "Kitchen"],
+    images: ["https://images.unsplash.com/photo-1522708323590-d24dbb6a6f3f?w=800"],
+    location: "Mukono Town, 5 min walk to UCU",
+    rooms: 2,
+    totalRooms: 15,
+    custodianName: "Mrs. Sarah Akello",
+    custodianUsername: "premium",
+    custodianPassword: "premium123",
+  },
 ];
 
-const INITIAL_ROOMS: Room[] = [
+let nextRoomId = 10;
+
+let roomsData: Room[] = [
   { id: 1, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 101, type: "single", status: "occupied", studentName: "John Kato", studentPhone: "0771234567", studentCourse: "BSC Computer Science", checkInDate: "2026-01-15", rentPaid: true },
   { id: 2, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 102, type: "double", status: "available", rentPaid: false },
   { id: 3, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 103, type: "single", status: "occupied", studentName: "Sarah Nakato", studentPhone: "0782345678", studentCourse: "BA Law", checkInDate: "2026-02-01", rentPaid: true },
-  { id: 4, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 201, type: "shared", status: "maintenance", rentPaid: false },
-  { id: 5, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 202, type: "double", status: "occupied", studentName: "Peter Okello", studentPhone: "0753456789", studentCourse: "BSC Engineering", checkInDate: "2026-01-20", rentPaid: false },
+  { id: 4, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 104, type: "single", status: "available", rentPaid: false },
+  { id: 5, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 105, type: "double", status: "available", rentPaid: false },
+  { id: 6, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 201, type: "shared", status: "maintenance", rentPaid: false },
+  { id: 7, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 202, type: "double", status: "occupied", studentName: "Peter Okello", studentPhone: "0753456789", studentCourse: "BSC Engineering", checkInDate: "2026-01-20", rentPaid: false },
+  { id: 8, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 203, type: "single", status: "available", rentPaid: false },
 ];
 
 export default function CustodianDashboard() {
-  const [rooms, setRooms] = useState<Room[]>(INITIAL_ROOMS);
-  const [hostels] = useState<Hostel[]>(INITIAL_HOSTELS);
-  const [selectedHostel, setSelectedHostel] = useState<number>(0);
+  const params = useParams();
+  const router = useRouter();
+  const hostelId = parseInt(params.id as string);
+  
+  const hostel = HOSTELS.find(h => h.id === hostelId);
+  const [rooms, setRooms] = useState<Room[]>([]);
   const [showAddRoom, setShowAddRoom] = useState(false);
   const [showAssignStudent, setShowAssignStudent] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
   
+  useEffect(() => {
+    setRooms(roomsData.filter(r => r.hostelId === hostelId));
+  }, [hostelId]);
+  
   const [roomForm, setRoomForm] = useState({
-    hostelId: "1",
     roomNumber: "",
     type: "single" as "single" | "double" | "shared",
   });
@@ -58,25 +113,35 @@ export default function CustodianDashboard() {
     checkInDate: "",
   });
 
-  const filteredRooms = selectedHostel 
-    ? rooms.filter(r => r.hostelId === selectedHostel)
-    : rooms;
+  if (!hostel) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-slate-500 mb-4">Hostel not found</p>
+          <Link href="/custodian/login" className="text-indigo-600 hover:underline">
+            Back to Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const handleAddRoom = (e: React.FormEvent) => {
     e.preventDefault();
     
     const newRoom: Room = {
-      id: Date.now(),
-      hostelId: parseInt(roomForm.hostelId),
-      hostelName: hostels.find(h => h.id === parseInt(roomForm.hostelId))?.name || "",
+      id: nextRoomId++,
+      hostelId: hostel.id,
+      hostelName: hostel.name,
       roomNumber: parseInt(roomForm.roomNumber),
       type: roomForm.type,
       status: "available",
       rentPaid: false,
     };
 
-    setRooms([...rooms, newRoom]);
-    setRoomForm({ hostelId: "1", roomNumber: "", type: "single" });
+    roomsData = [...roomsData, newRoom];
+    setRooms([...roomsData.filter(r => r.hostelId === hostelId)]);
+    setRoomForm({ roomNumber: "", type: "single" });
     setShowAddRoom(false);
     alert("Room added successfully!");
   };
@@ -86,7 +151,7 @@ export default function CustodianDashboard() {
     
     if (!selectedRoom) return;
 
-    setRooms(rooms.map(r => {
+    roomsData = roomsData.map(r => {
       if (r.id === selectedRoom.id) {
         return {
           ...r,
@@ -99,17 +164,18 @@ export default function CustodianDashboard() {
         };
       }
       return r;
-    }));
+    });
 
     setStudentForm({ studentName: "", studentPhone: "", studentCourse: "", checkInDate: "" });
     setShowAssignStudent(false);
     setSelectedRoom(null);
+    setRooms([...roomsData.filter(r => r.hostelId === hostelId)]);
     alert("Student assigned to room successfully!");
   };
 
   const handleCheckOut = (roomId: number) => {
     if (confirm("Are you sure you want to check out this student?")) {
-      setRooms(rooms.map(r => {
+      roomsData = roomsData.map(r => {
         if (r.id === roomId) {
           return {
             ...r,
@@ -122,26 +188,29 @@ export default function CustodianDashboard() {
           };
         }
         return r;
-      }));
+      });
+      setRooms([...roomsData.filter(r => r.hostelId === hostelId)]);
     }
   };
 
   const toggleRentPaid = (roomId: number) => {
-    setRooms(rooms.map(r => {
+    roomsData = roomsData.map(r => {
       if (r.id === roomId) {
         return { ...r, rentPaid: !r.rentPaid };
       }
       return r;
-    }));
+    });
+    setRooms([...roomsData.filter(r => r.hostelId === hostelId)]);
   };
 
   const markMaintenance = (roomId: number) => {
-    setRooms(rooms.map(r => {
+    roomsData = roomsData.map(r => {
       if (r.id === roomId) {
         return { ...r, status: r.status === "maintenance" ? "available" : "maintenance" };
       }
       return r;
-    }));
+    });
+    setRooms([...roomsData.filter(r => r.hostelId === hostelId)]);
   };
 
   const getStatusColor = (status: Room["status"]) => {
@@ -150,6 +219,10 @@ export default function CustodianDashboard() {
       case "occupied": return "bg-amber-100 text-amber-700";
       case "maintenance": return "bg-red-100 text-red-700";
     }
+  };
+
+  const logout = () => {
+    router.push("/custodian/login");
   };
 
   return (
@@ -161,17 +234,35 @@ export default function CustodianDashboard() {
             <span className="text-indigo-600 font-black text-xl">S</span>
           </Link>
           <div>
-            <h1 className="text-white font-bold text-lg">Custodian Dashboard</h1>
-            <p className="text-indigo-100 text-xs">Manage Rooms & Records</p>
+            <h1 className="text-white font-bold text-lg">{hostel.name}</h1>
+            <p className="text-indigo-100 text-xs">Custodian Dashboard</p>
           </div>
         </div>
-        <Link href="/" className="px-4 py-2 bg-white/20 text-white rounded-lg text-sm font-medium hover:bg-white/30 transition">
+        <button
+          onClick={logout}
+          className="px-4 py-2 bg-white/20 text-white rounded-lg text-sm font-medium hover:bg-white/30 transition"
+        >
           Logout
-        </Link>
+        </button>
       </header>
 
       <main className="flex-1 p-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
+          {/* Hostel Info */}
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 mb-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="font-bold text-slate-800">{hostel.name}</h2>
+                <p className="text-sm text-slate-500">{hostel.location}</p>
+                <p className="text-xs text-slate-400 mt-1">Custodian: {hostel.custodianName}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-indigo-600 font-black text-2xl">UGX {hostel.price.toLocaleString()}</p>
+                <p className="text-slate-400 text-xs">per semester</p>
+              </div>
+            </div>
+          </div>
+
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             {[
@@ -187,21 +278,9 @@ export default function CustodianDashboard() {
             ))}
           </div>
 
-          {/* Filters & Actions */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-medium text-slate-600">Hostel:</label>
-              <select
-                value={selectedHostel}
-                onChange={(e) => setSelectedHostel(Number(e.target.value))}
-                className="border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-400"
-              >
-                <option value={0}>All Hostels</option>
-                {hostels.map(h => (
-                  <option key={h.id} value={h.id}>{h.name}</option>
-                ))}
-              </select>
-            </div>
+          {/* Add Room Button */}
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-slate-800">Rooms</h2>
             <button
               onClick={() => setShowAddRoom(true)}
               className="px-4 py-2 bg-indigo-500 text-white rounded-lg font-medium hover:bg-indigo-600 transition flex items-center gap-2"
@@ -221,18 +300,6 @@ export default function CustodianDashboard() {
                   <h3 className="text-xl font-bold text-slate-800">Add New Room</h3>
                 </div>
                 <form onSubmit={handleAddRoom} className="p-6 space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">Hostel</label>
-                    <select
-                      value={roomForm.hostelId}
-                      onChange={(e) => setRoomForm({ ...roomForm, hostelId: e.target.value })}
-                      className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-indigo-400"
-                    >
-                      {hostels.map(h => (
-                        <option key={h.id} value={h.id}>{h.name}</option>
-                      ))}
-                    </select>
-                  </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-600 mb-1">Room Number</label>
                     <input
@@ -282,7 +349,7 @@ export default function CustodianDashboard() {
               <div className="bg-white rounded-2xl w-full max-w-md">
                 <div className="p-6 border-b border-slate-100">
                   <h3 className="text-xl font-bold text-slate-800">Assign Student to Room {selectedRoom.roomNumber}</h3>
-                  <p className="text-sm text-slate-500">{selectedRoom.hostelName}</p>
+                  <p className="text-sm text-slate-500">{hostel.name}</p>
                 </div>
                 <form onSubmit={handleAssignStudent} className="p-6 space-y-4">
                   <div>
@@ -351,7 +418,6 @@ export default function CustodianDashboard() {
               <table className="w-full">
                 <thead className="bg-slate-50 border-b border-slate-100">
                   <tr>
-                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-6 py-3">Hostel</th>
                     <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-6 py-3">Room</th>
                     <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-6 py-3">Type</th>
                     <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-6 py-3">Status</th>
@@ -361,9 +427,8 @@ export default function CustodianDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {filteredRooms.map((room) => (
+                  {rooms.map((room) => (
                     <tr key={room.id} className="hover:bg-slate-50 transition">
-                      <td className="px-6 py-4 text-sm text-slate-600">{room.hostelName}</td>
                       <td className="px-6 py-4">
                         <span className="font-medium text-slate-800">Room {room.roomNumber}</span>
                       </td>
@@ -429,10 +494,10 @@ export default function CustodianDashboard() {
                       </td>
                     </tr>
                   ))}
-                  {filteredRooms.length === 0 && (
+                  {rooms.length === 0 && (
                     <tr>
-                      <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
-                        No rooms found. Click &quot;Add Room&quot; to create one.
+                      <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                        No rooms yet. Click &quot;Add Room&quot; to create one.
                       </td>
                     </tr>
                   )}

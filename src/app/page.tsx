@@ -28,11 +28,11 @@ function RoleSelectionScreen() {
           </Link>
           
           <Link
-            href="/custodian"
+            href="/custodian/login"
             className="w-full block py-5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition-all"
           >
             Custodian Dashboard
-            <span className="block text-xs font-normal text-indigo-100 mt-1">Add rooms and manage records</span>
+            <span className="block text-xs font-normal text-indigo-100 mt-1">Sign in to manage rooms</span>
           </Link>
           
           <Link
