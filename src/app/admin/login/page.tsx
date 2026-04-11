@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+const LOGO_URL = "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/e23a92f2-c404-4f22-8678-b168d3c6ff5f.jpg";
+
 interface Admin {
   email: string;
   password: string;
@@ -65,18 +67,18 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-500 via-orange-600 to-amber-600 flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
-              <span className="text-orange-600 font-black text-2xl">S</span>
+            <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center p-2 shadow-lg">
+              <img src={LOGO_URL} alt="StayEasy Logo" className="w-full h-full object-contain" />
             </div>
           </Link>
           <h1 className="text-white font-bold text-2xl">
             {view === "login" ? "Admin Login" : "Admin Sign Up"}
           </h1>
-          <p className="text-orange-200 text-sm mt-1">
+          <p className="text-blue-200 text-sm mt-1">
             {view === "login" ? "Sign in to manage hostels" : "Create your admin account"}
           </p>
         </div>
@@ -98,7 +100,7 @@ export default function AdminLogin() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
                   placeholder="Your full name"
                 />
               </div>
@@ -111,7 +113,7 @@ export default function AdminLogin() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
                   placeholder="admin@example.com"
                 />
               </div>
@@ -124,7 +126,7 @@ export default function AdminLogin() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
                   placeholder="At least 4 characters"
                 />
               </div>
@@ -157,7 +159,7 @@ export default function AdminLogin() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
                   placeholder="admin@example.com"
                 />
               </div>
@@ -170,7 +172,7 @@ export default function AdminLogin() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
                   placeholder="Enter your password"
                 />
               </div>
@@ -193,21 +195,21 @@ export default function AdminLogin() {
             {view === "login" ? (
               <button
                 onClick={() => { setView("signup"); setError(""); }}
-                className="block text-center w-full text-sm text-slate-500 hover:text-orange-600"
+                className="block text-center w-full text-sm text-slate-500 hover:text-blue-600"
               >
                 Don&apos;t have an account? Sign Up
               </button>
             ) : (
               <button
                 onClick={() => { setView("login"); setError(""); }}
-                className="block text-center w-full text-sm text-slate-500 hover:text-orange-600"
+                className="block text-center w-full text-sm text-slate-500 hover:text-blue-600"
               >
                 Already have an account? Sign In
               </button>
             )}
             <Link
               href="/"
-              className="block text-center text-sm text-slate-400 hover:text-orange-600 mt-3"
+              className="block text-center text-sm text-slate-400 hover:text-blue-600 mt-3"
             >
               ← Back to Dashboard Selection
             </Link>

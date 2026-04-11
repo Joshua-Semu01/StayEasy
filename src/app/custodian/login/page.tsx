@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+const LOGO_URL = "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/e23a92f2-c404-4f22-8678-b168d3c6ff5f.jpg";
+
 interface HostelData {
   id: number;
   name: string;
@@ -86,16 +88,16 @@ export default function CustodianLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-700 flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
-              <span className="text-indigo-600 font-black text-2xl">S</span>
+            <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center p-2 shadow-lg">
+              <img src={LOGO_URL} alt="StayEasy Logo" className="w-full h-full object-contain" />
             </div>
           </Link>
           <h1 className="text-white font-bold text-2xl">Custodian Login</h1>
-          <p className="text-indigo-200 text-sm mt-1">Sign in to manage your hostel</p>
+          <p className="text-blue-200 text-sm mt-1">Sign in to manage your hostel</p>
         </div>
 
         <div className="bg-white rounded-2xl p-6 shadow-xl">
@@ -115,7 +117,7 @@ export default function CustodianLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
                 placeholder="carleton@hostel.com"
               />
             </div>
@@ -129,7 +131,7 @@ export default function CustodianLogin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
                 placeholder="Enter your password"
               />
             </div>
@@ -140,7 +142,7 @@ export default function CustodianLogin() {
               className={`w-full py-3 rounded-xl font-medium transition ${
                 loading
                   ? "bg-slate-200 text-slate-400"
-                  : "bg-indigo-500 text-white hover:bg-indigo-600"
+                  : "bg-orange-500 text-white hover:bg-orange-600"
               }`}
             >
               {loading ? "Signing in..." : "Sign In"}
@@ -150,14 +152,14 @@ export default function CustodianLogin() {
           <div className="mt-4 pt-4 border-t border-slate-100">
             <Link
               href="/"
-              className="block text-center text-sm text-slate-500 hover:text-indigo-600"
+              className="block text-center text-sm text-slate-500 hover:text-blue-600"
             >
               ← Back to Dashboard Selection
             </Link>
           </div>
         </div>
 
-        <p className="text-center text-indigo-200 text-xs mt-6">
+        <p className="text-center text-blue-400 text-xs mt-6">
           Contact admin to get login credentials
         </p>
       </div>

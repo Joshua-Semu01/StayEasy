@@ -4,6 +4,8 @@ import { useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import html2canvas from "html2canvas";
 
+const LOGO_URL = "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/e23a92f2-c404-4f22-8678-b168d3c6ff5f.jpg";
+
 interface Hostel {
   id: number;
   name: string;
@@ -244,14 +246,14 @@ export default function StudentDashboard() {
           studentPhone={studentPhone}
         />
 
-        <header className="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
+        <header className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
           <div className="flex items-center gap-3">
-            <Link href="/" className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
-              <span className="text-emerald-600 font-black text-xl">S</span>
+            <Link href="/" className="w-10 h-10 bg-white rounded-xl flex items-center justify-center p-1">
+              <img src={LOGO_URL} alt="StayEasy" className="w-full h-full object-contain" />
             </Link>
             <div>
               <h1 className="text-white font-bold text-lg">Student Dashboard</h1>
-              <p className="text-emerald-100 text-xs">Booking Confirmed</p>
+              <p className="text-blue-100 text-xs">Booking Confirmed</p>
             </div>
           </div>
           <Link href="/student" className="px-4 py-2 bg-white/20 text-white rounded-lg text-sm font-medium hover:bg-white/30 transition">
@@ -261,14 +263,14 @@ export default function StudentDashboard() {
 
         <main className="flex-1 flex items-center justify-center p-6">
           <div className="max-w-md w-full text-center">
-            <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+            <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
               <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
               </svg>
             </div>
             
             <h2 className="text-2xl font-black text-slate-800 mb-2">Booking Successful!</h2>
-            <p className="text-emerald-600 font-medium mb-6">Welcome to {selectedHostel.name}</p>
+            <p className="text-blue-600 font-medium mb-6">Welcome to {selectedHostel.name}</p>
 
             <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 mb-6 text-left">
               <p className="text-xs text-slate-500 mb-2">Booking Reference</p>
@@ -279,7 +281,7 @@ export default function StudentDashboard() {
               <button
                 onClick={handleDownload}
                 disabled={downloading}
-                className="w-full py-3 rounded-xl font-medium bg-white border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl font-medium bg-white border-2 border-blue-500 text-blue-600 hover:bg-blue-50 transition flex items-center justify-center gap-2"
               >
                 {downloading ? (
                   <>
@@ -301,7 +303,7 @@ export default function StudentDashboard() {
 
               <Link
                 href="/student"
-                className="block w-full py-3 rounded-xl font-medium bg-emerald-500 text-white hover:bg-emerald-600 transition"
+                className="block w-full py-3 rounded-xl font-medium bg-blue-500 text-white hover:bg-blue-600 transition"
               >
                 Book Another Hostel
               </Link>
@@ -315,14 +317,14 @@ export default function StudentDashboard() {
   if (view === "payment" && selectedHostel) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col">
-        <header className="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
+        <header className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
           <div className="flex items-center gap-3">
-            <Link href="/" className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
-              <span className="text-emerald-600 font-black text-xl">S</span>
+            <Link href="/" className="w-10 h-10 bg-white rounded-xl flex items-center justify-center p-1">
+              <img src={LOGO_URL} alt="StayEasy" className="w-full h-full object-contain" />
             </Link>
             <div>
               <h1 className="text-white font-bold text-lg">Booking</h1>
-              <p className="text-emerald-100 text-xs">Complete Payment</p>
+              <p className="text-blue-100 text-xs">Complete Payment</p>
             </div>
           </div>
           <button onClick={() => setView("list")} className="px-4 py-2 bg-white/20 text-white rounded-lg text-sm font-medium hover:bg-white/30 transition">
@@ -335,7 +337,7 @@ export default function StudentDashboard() {
             <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 mb-6">
               <h3 className="font-bold text-slate-800">{selectedHostel.name}</h3>
               <p className="text-sm text-slate-500">{selectedHostel.location}</p>
-              <p className="text-emerald-600 font-black text-xl mt-2">UGX {selectedHostel.price.toLocaleString()}</p>
+              <p className="text-blue-600 font-black text-xl mt-2">UGX {selectedHostel.price.toLocaleString()}</p>
             </div>
 
             <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-100">
@@ -348,7 +350,7 @@ export default function StudentDashboard() {
                     type="text"
                     value={studentName}
                     onChange={(e) => setStudentName(e.target.value)}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald-400"
+                    className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
                     placeholder="Full name"
                   />
                 </div>
@@ -359,7 +361,7 @@ export default function StudentDashboard() {
                     type="tel"
                     value={studentPhone}
                     onChange={(e) => setStudentPhone(e.target.value)}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald-400"
+                    className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
                     placeholder="e.g. 0771234567"
                   />
                 </div>
@@ -376,7 +378,7 @@ export default function StudentDashboard() {
                     disabled={!studentName || !studentPhone}
                     className={`w-full py-3 rounded-xl font-medium transition ${
                       studentName && studentPhone
-                        ? "bg-emerald-500 text-white hover:bg-emerald-600"
+                        ? "bg-blue-500 text-white hover:bg-blue-600"
                         : "bg-slate-200 text-slate-400"
                     }`}
                   >
@@ -404,7 +406,7 @@ export default function StudentDashboard() {
   if (view === "details" && selectedHostel) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col">
-        <header className="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4 sticky top-0 z-50 shadow-lg">
+        <header className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 sticky top-0 z-50 shadow-lg">
           <button onClick={() => setView("list")} className="flex items-center gap-2 text-white">
             <IconArrowLeft />
             <span className="font-medium">Back</span>
@@ -431,7 +433,7 @@ export default function StudentDashboard() {
             <div className="p-4">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <p className="text-emerald-600 font-black text-2xl">UGX {selectedHostel.price.toLocaleString()}</p>
+                  <p className="text-blue-600 font-black text-2xl">UGX {selectedHostel.price.toLocaleString()}</p>
                   <p className="text-slate-400 text-xs">per semester</p>
                 </div>
                 <div className="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded">
@@ -454,21 +456,21 @@ export default function StudentDashboard() {
                 </div>
               </div>
 
-              <div className="mb-4 bg-emerald-50 rounded-xl p-3">
-                <h4 className="text-sm font-bold text-emerald-800 mb-2">Room Availability</h4>
+              <div className="mb-4 bg-blue-50 rounded-xl p-3">
+                <h4 className="text-sm font-bold text-blue-800 mb-2">Room Availability</h4>
                 <div className="flex gap-1 flex-wrap">
                   {Array.from({ length: selectedHostel.totalRooms }).map((_, i) => (
                     <div
                       key={i}
                       className={`w-6 h-6 rounded flex items-center justify-center text-xs font-bold ${
-                        i < selectedHostel.rooms ? "bg-emerald-500 text-white" : "bg-red-400 text-white"
+                        i < selectedHostel.rooms ? "bg-blue-500 text-white" : "bg-red-400 text-white"
                       }`}
                     >
                       {i + 1}
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-emerald-600 mt-2">{selectedHostel.rooms} of {selectedHostel.totalRooms} rooms available</p>
+                <p className="text-xs text-blue-600 mt-2">{selectedHostel.rooms} of {selectedHostel.totalRooms} rooms available</p>
               </div>
 
               <button
@@ -476,7 +478,7 @@ export default function StudentDashboard() {
                 disabled={!selectedHostel.available || selectedHostel.rooms === 0}
                 className={`w-full py-3 rounded-xl font-medium transition ${
                   selectedHostel.available && selectedHostel.rooms > 0
-                    ? "bg-emerald-500 text-white hover:bg-emerald-600"
+                    ? "bg-blue-500 text-white hover:bg-blue-600"
                     : "bg-slate-200 text-slate-400"
                 }`}
               >
@@ -491,14 +493,14 @@ export default function StudentDashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
+      <header className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
         <div className="flex items-center gap-3">
           <Link href="/" className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
-            <span className="text-emerald-600 font-black text-xl">S</span>
+            <img src={LOGO_URL} alt="StayEasy" className="w-full h-full object-contain" />
           </Link>
           <div>
             <h1 className="text-white font-bold text-lg">Student Dashboard</h1>
-            <p className="text-emerald-100 text-xs">Find Your Hostel</p>
+            <p className="text-blue-100 text-xs">Find Your Hostel</p>
           </div>
         </div>
         <Link href="/" className="px-4 py-2 bg-white/20 text-white rounded-lg text-sm font-medium hover:bg-white/30 transition">
@@ -513,7 +515,7 @@ export default function StudentDashboard() {
               <IconSearch />
             </div>
             <input
-              className="w-full bg-white rounded-xl py-3 pl-12 pr-4 text-sm outline-none shadow-sm border border-slate-200 focus:border-emerald-400"
+              className="w-full bg-white rounded-xl py-3 pl-12 pr-4 text-sm outline-none shadow-sm border border-slate-200 focus:border-blue-400"
               placeholder="Search hostels..."
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
@@ -522,15 +524,15 @@ export default function StudentDashboard() {
 
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 text-center">
-              <p className="text-2xl font-black text-emerald-600">{HOSTELS.length}</p>
+              <p className="text-2xl font-black text-blue-600">{HOSTELS.length}</p>
               <p className="text-xs text-slate-500">Hostels</p>
             </div>
             <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 text-center">
-              <p className="text-2xl font-black text-emerald-600">{HOSTELS.filter(h => h.available).length}</p>
+              <p className="text-2xl font-black text-blue-600">{HOSTELS.filter(h => h.available).length}</p>
               <p className="text-xs text-slate-500">Available</p>
             </div>
             <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 text-center">
-              <p className="text-2xl font-black text-emerald-600">{HOSTELS.reduce((s, h) => s + h.rooms, 0)}</p>
+              <p className="text-2xl font-black text-blue-600">{HOSTELS.reduce((s, h) => s + h.rooms, 0)}</p>
               <p className="text-xs text-slate-500">Rooms</p>
             </div>
           </div>
@@ -549,7 +551,7 @@ export default function StudentDashboard() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   <div className="absolute top-3 right-3">
                     <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                      hostel.available ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-600"
+                      hostel.available ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-600"
                     }`}>
                       {hostel.available ? "Available" : "Full"}
                     </span>
@@ -563,7 +565,7 @@ export default function StudentDashboard() {
                   </div>
                   <div className="flex justify-between mt-3">
                     <div>
-                      <p className="text-emerald-600 font-black">UGX {hostel.price.toLocaleString()}</p>
+                      <p className="text-blue-600 font-black">UGX {hostel.price.toLocaleString()}</p>
                       <p className="text-slate-400 text-xs">/semester</p>
                     </div>
                     <div className="text-right">

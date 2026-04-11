@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+const LOGO_URL = "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/e23a92f2-c404-4f22-8678-b168d3c6ff5f.jpg";
+
 interface Hostel {
   id: number;
   name: string;
@@ -178,14 +180,14 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Header */}
-      <header className="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
+      <header className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
         <div className="flex items-center gap-3">
-          <Link href="/" className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
-            <span className="text-orange-600 font-black text-xl">S</span>
+          <Link href="/" className="w-10 h-10 bg-white rounded-xl flex items-center justify-center p-1">
+            <img src={LOGO_URL} alt="StayEasy" className="w-full h-full object-contain" />
           </Link>
           <div>
             <h1 className="text-white font-bold text-lg">Admin Dashboard</h1>
-            <p className="text-orange-100 text-xs">Manage Hostels</p>
+            <p className="text-blue-100 text-xs">Manage Hostels</p>
           </div>
         </div>
         <Link href="/" className="px-4 py-2 bg-white/20 text-white rounded-lg text-sm font-medium hover:bg-white/30 transition">
