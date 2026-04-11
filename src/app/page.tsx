@@ -229,15 +229,12 @@ function AvailabilityBadge({ available }: { available: boolean }) {
 
 // ─── Responsive Layout Shell ──────────────────────────────────────────────────
 
-const IconLogo = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className}>
-    <circle cx="50" cy="50" r="45" fill="#3B82F6" />
-    <rect x="20" y="45" width="60" height="35" rx="5" fill="#ffffff" />
-    <rect x="26" y="55" width="15" height="15" rx="3" fill="#3B82F6" />
-    <rect x="59" y="55" width="15" height="15" rx="3" fill="#3B82F6" />
-    <polygon points="50,22 20,45 80,45" fill="#10B981" />
-    <rect x="35" y="65" width="30" height="10" rx="3" fill="#F59E0B" />
-  </svg>
+const LogoImg = ({ className = "" }: { className?: string }) => (
+  <img 
+    src="https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/70381120-090e-4487-9c8a-7b2014a89b58.png" 
+    alt="StayEasy Logo" 
+    className={className}
+  />
 );
 
 const NAV_ITEMS: { screen: Screen; label: string; icon: () => React.ReactElement }[] = [
@@ -264,7 +261,7 @@ function Layout({
         <div className="px-6 py-6 border-b border-slate-800">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 flex-shrink-0">
-              <IconLogo className="w-full h-full" />
+              <LogoImg className="w-full h-full" />
             </div>
             <div>
               <h1 className="text-white font-black text-lg tracking-tight">StayEasy</h1>
@@ -302,7 +299,7 @@ function Layout({
       <header className="lg:hidden bg-slate-900 text-white px-4 py-3 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 flex-shrink-0">
-            <IconLogo className="w-full h-full" />
+            <LogoImg className="w-full h-full" />
           </div>
           <span className="font-black text-base">StayEasy</span>
         </div>
@@ -352,7 +349,7 @@ function WelcomeScreen({ onNavigate }: { onNavigate: (screen: Screen) => void })
       
       <div className="relative z-10 text-center max-w-md">
         <div className="w-28 h-28 mx-auto mb-6">
-          <IconLogo className="w-full h-full" />
+          <LogoImg className="w-full h-full" />
         </div>
         
         <h1 className="text-white font-black text-4xl mb-2">StayEasy</h1>
