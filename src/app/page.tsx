@@ -41,9 +41,12 @@ const HOSTELS: Hostel[] = [
     available: true,
     rating: 4.5,
     description:
-      "Standard and affordable hostel rooms in Mukono for UCU students. Clean, secure, and convenient location near the university. Perfect for students looking for comfortable and budget-friendly accommodation.",
+      "Standard and affordable hostel rooms in Mukono for UCU students. Clean, secure, and convenient location near the university.",
     amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
-    images: ROOM_IMAGES,
+    images: [
+      "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/c31eb9ce-fc72-45fa-b3e9-ddb722e4a4b2.jpg",
+      ...ROOM_IMAGES,
+    ],
     location: "Mukono, near UCU Main Gate",
     rooms: 4,
     totalRooms: 20,
@@ -56,9 +59,12 @@ const HOSTELS: Hostel[] = [
     available: true,
     rating: 4.2,
     description:
-      "Affordable standard hostel rooms in Mukono town. Great community atmosphere with shared kitchen and study area. Ideal for UCU students on a budget.",
+      "Affordable standard hostel rooms in Mukono town. Great community atmosphere with shared kitchen and study area.",
     amenities: ["Wi-Fi", "Security", "Water", "Study Room", "Kitchen"],
-    images: ROOM_IMAGES,
+    images: [
+      "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/2bc3481d-55ff-4f2a-bbcd-560e61677aab.jpg",
+      ...ROOM_IMAGES,
+    ],
     location: "Mukono Town, 5 min walk to UCU",
     rooms: 2,
     totalRooms: 15,
@@ -71,7 +77,7 @@ const HOSTELS: Hostel[] = [
     available: false,
     rating: 4.8,
     description:
-      "Quality standard hostel accommodation near Lake Victoria in Mukono. Clean rooms with essential amenities. Popular with UCU students who want comfort at reasonable prices.",
+      "Quality standard hostel accommodation near Lake Victoria in Mukono. Clean rooms with essential amenities.",
     amenities: ["Wi-Fi", "Security", "En-Suite", "Gym", "Rooftop", "Water"],
     images: ROOM_IMAGES,
     location: "Mukono, Lake Victoria Road",
@@ -80,15 +86,18 @@ const HOSTELS: Hostel[] = [
   },
   {
     id: 4,
-    name: "Highfield Hostel - Mukono",
+    name: "Highfield Hostel",
     price: 1000000,
     distance: "0.6 km from UCU",
     available: true,
     rating: 4.0,
     description:
-      "Comfortable standard hostel rooms in a quiet and safe area in Mukono. Easy access to UCU with convenient transportation options. Includes common areas and laundry facilities.",
+      "Comfortable standard hostel rooms in a quiet and safe area in Mukono. Easy access to UCU with convenient transportation.",
     amenities: ["Wi-Fi", "Security", "Water", "Laundry", "TV Lounge"],
-    images: ROOM_IMAGES,
+    images: [
+      "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/cef92f58-e533-4739-b6fe-10f77ae01004.jpg",
+      ...ROOM_IMAGES,
+    ],
     location: "Mukono, Canaan Road",
     rooms: 6,
     totalRooms: 18,
