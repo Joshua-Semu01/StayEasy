@@ -511,9 +511,14 @@ export default function StudentDashboard() {
       <main className="flex-1 p-6">
         <div className="max-w-5xl mx-auto">
           {/* UVP Section */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 mb-6 text-center">
-            <h2 className="text-white font-bold text-xl mb-2">Find and Book Trusted Hostels in Mukono Easily</h2>
-            <p className="text-blue-100 text-sm">Without the stress of moving around physically.</p>
+          <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-8 mb-6 text-center shadow-xl shadow-orange-500/20">
+            <h2 className="text-white font-black text-2xl mb-3">Find and Book Trusted Hostels in Mukono Easily</h2>
+            <p className="text-orange-100 text-lg font-medium">Without the stress of moving around physically.</p>
+            <div className="mt-4 flex justify-center gap-2">
+              <span className="w-2 h-2 bg-white/50 rounded-full animate-pulse"></span>
+              <span className="w-2 h-2 bg-white/50 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></span>
+              <span className="w-2 h-2 bg-white/50 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></span>
+            </div>
           </div>
 
           <div className="relative mb-6">
