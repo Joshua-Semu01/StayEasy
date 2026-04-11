@@ -1,0 +1,415 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+interface Hostel {
+  id: number;
+  name: string;
+  price: number;
+  distance: string;
+  available: boolean;
+  rating: number;
+  description: string;
+  amenities: string[];
+  images: string[];
+  location: string;
+  rooms: number;
+  totalRooms: number;
+}
+
+const INITIAL_HOSTELS: Hostel[] = [
+  {
+    id: 1,
+    name: "Carleton Hostel",
+    price: 1000000,
+    distance: "0.3 km from UCU",
+    available: true,
+    rating: 4.5,
+    description: "Standard and affordable hostel rooms in Mukono for UCU students. Clean, secure, and convenient location near the university.",
+    amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
+    images: ["https://images.unsplash.com/photo-1555854877-bab0e564d8e5?w=800"],
+    location: "Mukono, near UCU Main Gate",
+    rooms: 4,
+    totalRooms: 20,
+  },
+  {
+    id: 2,
+    name: "Premium Hostel",
+    price: 1500000,
+    distance: "0.8 km from UCU",
+    available: true,
+    rating: 4.2,
+    description: "Affordable standard hostel rooms in Mukono town. Great community atmosphere with shared kitchen and study area.",
+    amenities: ["Wi-Fi", "Security", "Water", "Study Room", "Kitchen"],
+    images: ["https://images.unsplash.com/photo-1522708323590-d24dbb6a6f3f?w=800"],
+    location: "Mukono Town, 5 min walk to UCU",
+    rooms: 2,
+    totalRooms: 15,
+  },
+];
+
+const AVAILABLE_AMENITIES = ["Wi-Fi", "Security", "Water", "Electricity", "Parking", "Study Room", "Kitchen", "En-Suite", "Gym", "Rooftop", "Laundry", "TV Lounge"];
+
+let nextId = 3;
+
+export default function AdminDashboard() {
+  const [hostels, setHostels] = useState<Hostel[]>(INITIAL_HOSTELS);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    distance: "",
+    location: "",
+    description: "",
+    totalRooms: "",
+    amenities: [] as string[],
+    imageUrl: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const toggleAmenity = (amenity: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      amenities: prev.amenities.includes(amenity)
+        ? prev.amenities.filter((a) => a !== amenity)
+        : [...prev.amenities, amenity],
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const newHostel: Hostel = {
+      id: editingId || nextId++,
+      name: formData.name,
+      price: parseInt(formData.price) || 0,
+      distance: formData.distance,
+      location: formData.location,
+      description: formData.description,
+      totalRooms: parseInt(formData.totalRooms) || 0,
+      rooms: editingId ? hostels.find(h => h.id === editingId)?.rooms || 0 : 0,
+      available: true,
+      rating: 4.0,
+      amenities: formData.amenities,
+      images: formData.imageUrl ? [formData.imageUrl] : ["https://images.unsplash.com/photo-1555854877-bab0e564d8e5?w=800"],
+    };
+
+    if (editingId) {
+      setHostels(hostels.map(h => h.id === editingId ? newHostel : h));
+    } else {
+      setHostels([...hostels, newHostel]);
+    }
+
+    resetForm();
+    alert(editingId ? "Hostel updated successfully!" : "Hostel added successfully!");
+  };
+
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      price: "",
+      distance: "",
+      location: "",
+      description: "",
+      totalRooms: "",
+      amenities: [],
+      imageUrl: "",
+    });
+    setShowAddForm(false);
+    setEditingId(null);
+  };
+
+  const handleEdit = (hostel: Hostel) => {
+    setFormData({
+      name: hostel.name,
+      price: hostel.price.toString(),
+      distance: hostel.distance,
+      location: hostel.location,
+      description: hostel.description,
+      totalRooms: hostel.totalRooms.toString(),
+      amenities: hostel.amenities,
+      imageUrl: hostel.images[0] || "",
+    });
+    setEditingId(hostel.id);
+    setShowAddForm(true);
+  };
+
+  const handleDelete = (id: number) => {
+    if (confirm("Are you sure you want to delete this hostel?")) {
+      setHostels(hostels.filter(h => h.id !== id));
+    }
+  };
+
+  const toggleAvailability = (id: number) => {
+    setHostels(hostels.map(h => h.id === id ? { ...h, available: !h.available } : h));
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Header */}
+      <header className="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
+        <div className="flex items-center gap-3">
+          <Link href="/" className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
+            <span className="text-orange-600 font-black text-xl">S</span>
+          </Link>
+          <div>
+            <h1 className="text-white font-bold text-lg">Admin Dashboard</h1>
+            <p className="text-orange-100 text-xs">Manage Hostels</p>
+          </div>
+        </div>
+        <Link href="/" className="px-4 py-2 bg-white/20 text-white rounded-lg text-sm font-medium hover:bg-white/30 transition">
+          Logout
+        </Link>
+      </header>
+
+      <main className="flex-1 p-6">
+        <div className="max-w-6xl mx-auto">
+          {/* Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            {[
+              { label: "Total Hostels", value: hostels.length, color: "text-orange-600" },
+              { label: "Available", value: hostels.filter(h => h.available).length, color: "text-emerald-600" },
+              { label: "Total Rooms", value: hostels.reduce((sum, h) => sum + h.totalRooms, 0), color: "text-indigo-600" },
+              { label: "Avg Price", value: `UGX ${Math.round(hostels.reduce((sum, h) => sum + h.price, 0) / (hostels.length || 1) / 1000) * 1000}`, color: "text-amber-600" },
+            ].map((stat) => (
+              <div key={stat.label} className="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                <p className={`text-2xl font-black ${stat.color}`}>{stat.value}</p>
+                <p className="text-xs text-slate-500">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Add/Edit Button */}
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-slate-800">Hostels</h2>
+            <button
+              onClick={() => { resetForm(); setShowAddForm(true); }}
+              className="px-4 py-2 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-600 transition flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Add Hostel
+            </button>
+          </div>
+
+          {/* Add/Edit Form Modal */}
+          {showAddForm && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div className="p-6 border-b border-slate-100">
+                  <h3 className="text-xl font-bold text-slate-800">{editingId ? "Edit Hostel" : "Add New Hostel"}</h3>
+                </div>
+                <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-600 mb-1">Hostel Name *</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400"
+                        placeholder="e.g. Carleton Hostel"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-600 mb-1">Price (UGX) *</label>
+                      <input
+                        type="number"
+                        name="price"
+                        value={formData.price}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400"
+                        placeholder="e.g. 1000000"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-600 mb-1">Distance from UCU</label>
+                      <input
+                        type="text"
+                        name="distance"
+                        value={formData.distance}
+                        onChange={handleInputChange}
+                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400"
+                        placeholder="e.g. 0.5 km from UCU"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-600 mb-1">Location *</label>
+                      <input
+                        type="text"
+                        name="location"
+                        value={formData.location}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400"
+                        placeholder="e.g. Mukono, near UCU"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-600 mb-1">Total Rooms *</label>
+                      <input
+                        type="number"
+                        name="totalRooms"
+                        value={formData.totalRooms}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400"
+                        placeholder="e.g. 20"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-600 mb-1">Image URL</label>
+                      <input
+                        type="url"
+                        name="imageUrl"
+                        value={formData.imageUrl}
+                        onChange={handleInputChange}
+                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400"
+                        placeholder="https://..."
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-600 mb-1">Description</label>
+                    <textarea
+                      name="description"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      rows={3}
+                      className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400 resize-none"
+                      placeholder="Describe the hostel..."
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-600 mb-2">Amenities</label>
+                    <div className="flex flex-wrap gap-2">
+                      {AVAILABLE_AMENITIES.map((amenity) => (
+                        <button
+                          key={amenity}
+                          type="button"
+                          onClick={() => toggleAmenity(amenity)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
+                            formData.amenities.includes(amenity)
+                              ? "bg-orange-500 text-white"
+                              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                          }`}
+                        >
+                          {amenity}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex gap-3 pt-4">
+                    <button
+                      type="button"
+                      onClick={resetForm}
+                      className="flex-1 py-3 border border-slate-200 text-slate-600 rounded-xl font-medium hover:bg-slate-50 transition"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="flex-1 py-3 bg-orange-500 text-white rounded-xl font-medium hover:bg-orange-600 transition"
+                    >
+                      {editingId ? "Update Hostel" : "Add Hostel"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* Hostels Table */}
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-slate-50 border-b border-slate-100">
+                  <tr>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-6 py-3">Hostel</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-6 py-3">Location</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-6 py-3">Price</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-6 py-3">Rooms</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-6 py-3">Status</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-6 py-3">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {hostels.map((hostel) => (
+                    <tr key={hostel.id} className="hover:bg-slate-50 transition">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className="w-12 h-12 rounded-lg bg-cover bg-center"
+                            style={{ backgroundImage: `url(${hostel.images[0]})` }}
+                          />
+                          <div>
+                            <p className="font-medium text-slate-800">{hostel.name}</p>
+                            <p className="text-xs text-slate-500">{hostel.distance}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-slate-600">{hostel.location}</td>
+                      <td className="px-6 py-4 text-sm font-medium text-slate-800">UGX {hostel.price.toLocaleString()}</td>
+                      <td className="px-6 py-4 text-sm text-slate-600">{hostel.rooms}/{hostel.totalRooms}</td>
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() => toggleAvailability(hostel.id)}
+                          className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                            hostel.available
+                              ? "bg-emerald-100 text-emerald-700"
+                              : "bg-red-100 text-red-600"
+                          }`}
+                        >
+                          {hostel.available ? "Available" : "Unavailable"}
+                        </button>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleEdit(hostel)}
+                            className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={() => handleDelete(hostel.id)}
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {hostels.length === 0 && (
+                    <tr>
+                      <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                        No hostels added yet. Click &quot;Add Hostel&quot; to create one.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
