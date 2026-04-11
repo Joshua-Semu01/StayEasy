@@ -46,7 +46,7 @@ const HOSTELS: Hostel[] = [
   },
   {
     id: 2,
-    name: "Mukono Standard Hostel",
+    name: "Premium Hostel",
     price: 1500000,
     distance: "0.8 km from UCU",
     available: true,
@@ -55,7 +55,7 @@ const HOSTELS: Hostel[] = [
       "Affordable standard hostel rooms in Mukono town. Great community atmosphere with shared kitchen and study area. Ideal for UCU students on a budget.",
     amenities: ["Wi-Fi", "Security", "Water", "Study Room", "Kitchen"],
     images: [
-      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
+      "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/2bc3481d-55ff-4f2a-bbcd-560e61677aab.jpg",
       "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80",
     ],
     location: "Mukono Town, 5 min walk to UCU",
