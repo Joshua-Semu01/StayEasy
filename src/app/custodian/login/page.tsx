@@ -51,7 +51,7 @@ let HOSTELS: HostelData[] = [
     rating: 4.2,
     description: "Affordable standard hostel rooms in Mukono town.",
     amenities: ["Wi-Fi", "Security", "Water", "Study Room", "Kitchen"],
-    images: ["https://images.unsplash.com/photo-1522708323590-d24dbb6a6f3f?w=800"],
+    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/d107fb98-8dd1-46d1-945f-2718eb5d1ace.jpg"],
     location: "Mukono Town, 5 min walk to UCU",
     rooms: 2,
     totalRooms: 15,
