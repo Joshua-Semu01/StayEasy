@@ -82,7 +82,7 @@ const HOSTELS: Hostel[] = [
   },
   {
     id: 4,
-    name: "Canaan Hostel - Mukono",
+    name: "Highfield Hostel - Mukono",
     price: 1000000,
     distance: "0.6 km from UCU",
     available: true,
@@ -91,7 +91,7 @@ const HOSTELS: Hostel[] = [
       "Comfortable standard hostel rooms in a quiet and safe area in Mukono. Easy access to UCU with convenient transportation options. Includes common areas and laundry facilities.",
     amenities: ["Wi-Fi", "Security", "Water", "Laundry", "TV Lounge"],
     images: [
-      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80",
+      "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/cef92f58-e533-4739-b6fe-10f77ae01004.jpg",
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80",
     ],
     location: "Mukono, Canaan Road",
