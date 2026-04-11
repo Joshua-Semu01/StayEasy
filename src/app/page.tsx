@@ -25,6 +25,13 @@ interface Hostel {
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
+const ROOM_IMAGES = [
+  "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/4b5b01af-4b77-4dbe-93c6-af59774f2ea8.jpg",
+  "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/73f942a0-568e-44ba-ba6b-b55a05d2494e.jpg",
+  "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/8c49705f-44b9-49c9-a517-6d915931c44d.jpg",
+  "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/94d8edb0-d55d-48e7-9e35-7b58a101cbc1.jpg",
+];
+
 const HOSTELS: Hostel[] = [
   {
     id: 1,
@@ -36,10 +43,7 @@ const HOSTELS: Hostel[] = [
     description:
       "Standard and affordable hostel rooms in Mukono for UCU students. Clean, secure, and convenient location near the university. Perfect for students looking for comfortable and budget-friendly accommodation.",
     amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
-    images: [
-      "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/c31eb9ce-fc72-45fa-b3e9-ddb722e4a4b2.jpg",
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
-    ],
+    images: ROOM_IMAGES,
     location: "Mukono, near UCU Main Gate",
     rooms: 4,
     totalRooms: 20,
@@ -54,10 +58,7 @@ const HOSTELS: Hostel[] = [
     description:
       "Affordable standard hostel rooms in Mukono town. Great community atmosphere with shared kitchen and study area. Ideal for UCU students on a budget.",
     amenities: ["Wi-Fi", "Security", "Water", "Study Room", "Kitchen"],
-    images: [
-      "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/2bc3481d-55ff-4f2a-bbcd-560e61677aab.jpg",
-      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80",
-    ],
+    images: ROOM_IMAGES,
     location: "Mukono Town, 5 min walk to UCU",
     rooms: 2,
     totalRooms: 15,
@@ -72,10 +73,7 @@ const HOSTELS: Hostel[] = [
     description:
       "Quality standard hostel accommodation near Lake Victoria in Mukono. Clean rooms with essential amenities. Popular with UCU students who want comfort at reasonable prices.",
     amenities: ["Wi-Fi", "Security", "En-Suite", "Gym", "Rooftop", "Water"],
-    images: [
-      "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
-      "https://images.unsplash.com/photo-1592229506151-845940174bb0?w=800&q=80",
-    ],
+    images: ROOM_IMAGES,
     location: "Mukono, Lake Victoria Road",
     rooms: 0,
     totalRooms: 12,
@@ -90,10 +88,7 @@ const HOSTELS: Hostel[] = [
     description:
       "Comfortable standard hostel rooms in a quiet and safe area in Mukono. Easy access to UCU with convenient transportation options. Includes common areas and laundry facilities.",
     amenities: ["Wi-Fi", "Security", "Water", "Laundry", "TV Lounge"],
-    images: [
-      "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/cef92f58-e533-4739-b6fe-10f77ae01004.jpg",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80",
-    ],
+    images: ROOM_IMAGES,
     location: "Mukono, Canaan Road",
     rooms: 6,
     totalRooms: 18,
