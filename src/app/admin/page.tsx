@@ -18,7 +18,7 @@ interface Hostel {
   rooms: number;
   totalRooms: number;
   custodianName: string;
-  custodianUsername: string;
+  custodianEmail: string;
   custodianPassword: string;
 }
 
@@ -37,7 +37,7 @@ const INITIAL_HOSTELS: Hostel[] = [
     rooms: 4,
     totalRooms: 20,
     custodianName: "Mr. John Odea",
-    custodianUsername: "carleton",
+    custodianEmail: "carleton@hostel.com",
     custodianPassword: "carleton123",
   },
   {
@@ -54,7 +54,7 @@ const INITIAL_HOSTELS: Hostel[] = [
     rooms: 2,
     totalRooms: 15,
     custodianName: "Mrs. Sarah Akello",
-    custodianUsername: "premium",
+    custodianEmail: "premium@hostel.com",
     custodianPassword: "premium123",
   },
 ];
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
     amenities: [] as string[],
     imageUrl: "",
     custodianName: "",
-    custodianUsername: "",
+    custodianEmail: "",
     custodianPassword: "",
   });
 
@@ -115,7 +115,7 @@ export default function AdminDashboard() {
       amenities: formData.amenities,
       images: formData.imageUrl ? [formData.imageUrl] : ["https://images.unsplash.com/photo-1555854877-bab0e564d8e5?w=800"],
       custodianName: formData.custodianName,
-      custodianUsername: formData.custodianUsername,
+      custodianEmail: formData.custodianEmail,
       custodianPassword: formData.custodianPassword,
     };
 
@@ -140,7 +140,7 @@ export default function AdminDashboard() {
       amenities: [],
       imageUrl: "",
       custodianName: "",
-      custodianUsername: "",
+      custodianEmail: "",
       custodianPassword: "",
     });
     setShowAddForm(false);
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
       amenities: hostel.amenities,
       imageUrl: hostel.images[0] || "",
       custodianName: hostel.custodianName || "",
-      custodianUsername: hostel.custodianUsername || "",
+      custodianEmail: hostel.custodianEmail || "",
       custodianPassword: hostel.custodianPassword || "",
     });
     setEditingId(hostel.id);
@@ -349,14 +349,14 @@ export default function AdminDashboard() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-slate-600 mb-1">Username</label>
+                        <label className="block text-sm font-medium text-slate-600 mb-1">Email</label>
                         <input
-                          type="text"
-                          name="custodianUsername"
-                          value={formData.custodianUsername}
+                          type="email"
+                          name="custodianEmail"
+                          value={formData.custodianEmail}
                           onChange={handleInputChange}
                           className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400"
-                          placeholder="e.g. carleton"
+                          placeholder="e.g. carleton@hostel.com"
                         />
                       </div>
                       <div>

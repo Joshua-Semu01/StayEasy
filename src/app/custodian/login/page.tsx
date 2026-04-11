@@ -18,7 +18,7 @@ interface HostelData {
   rooms: number;
   totalRooms: number;
   custodianName: string;
-  custodianUsername: string;
+  custodianEmail: string;
   custodianPassword: string;
 }
 
@@ -37,7 +37,7 @@ let HOSTELS: HostelData[] = [
     rooms: 4,
     totalRooms: 20,
     custodianName: "Mr. John Odea",
-    custodianUsername: "carleton",
+    custodianEmail: "carleton@hostel.com",
     custodianPassword: "carleton123",
   },
   {
@@ -54,14 +54,14 @@ let HOSTELS: HostelData[] = [
     rooms: 2,
     totalRooms: 15,
     custodianName: "Mrs. Sarah Akello",
-    custodianUsername: "premium",
+    custodianEmail: "premium@hostel.com",
     custodianPassword: "premium123",
   },
 ];
 
 export default function CustodianLogin() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -73,14 +73,14 @@ export default function CustodianLogin() {
 
     const hostel = HOSTELS.find(
       (h) =>
-        h.custodianUsername.toLowerCase() === username.toLowerCase() &&
+        h.custodianEmail.toLowerCase() === email.toLowerCase() &&
         h.custodianPassword === password
     );
 
     if (hostel) {
       router.push(`/custodian/${hostel.id}`);
     } else {
-      setError("Invalid username or password");
+      setError("Invalid email or password");
       setLoading(false);
     }
   };
@@ -108,15 +108,15 @@ export default function CustodianLogin() {
 
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1">
-                Username
+                Email
               </label>
               <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-                placeholder="Enter your username"
+                placeholder="carleton@hostel.com"
               />
             </div>
 

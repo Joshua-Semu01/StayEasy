@@ -32,7 +32,7 @@ interface Hostel {
   rooms: number;
   totalRooms: number;
   custodianName: string;
-  custodianUsername: string;
+  custodianEmail: string;
   custodianPassword: string;
 }
 
@@ -51,7 +51,7 @@ const HOSTELS: Hostel[] = [
     rooms: 4,
     totalRooms: 20,
     custodianName: "Mr. John Odea",
-    custodianUsername: "carleton",
+    custodianEmail: "carleton@hostel.com",
     custodianPassword: "carleton123",
   },
   {
@@ -68,7 +68,7 @@ const HOSTELS: Hostel[] = [
     rooms: 2,
     totalRooms: 15,
     custodianName: "Mrs. Sarah Akello",
-    custodianUsername: "premium",
+    custodianEmail: "premium@hostel.com",
     custodianPassword: "premium123",
   },
 ];
