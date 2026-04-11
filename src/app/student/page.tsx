@@ -189,10 +189,9 @@ export default function StudentDashboard() {
   const [selectedHostel, setSelectedHostel] = useState<Hostel | null>(null);
   const [searchValue, setSearchValue] = useState("");
   
-  const [paymentStep, setPaymentStep] = useState<1 | 2 | 3 | 4>(1);
+  const [paymentStep, setPaymentStep] = useState<1 | 2 | 4>(1);
   const [studentName, setStudentName] = useState("");
   const [studentPhone, setStudentPhone] = useState("");
-  const [pin, setPin] = useState("");
   const [downloading, setDownloading] = useState(false);
   const receiptRef = useRef<HTMLDivElement>(null);
   const [bookingRef] = useState(() => `SE${Math.floor(Math.random() * 900000 + 100000)}`);
@@ -226,15 +225,7 @@ export default function StudentDashboard() {
   const handlePayment = () => {
     if (studentName && studentPhone) {
       setPaymentStep(2);
-      setTimeout(() => setPaymentStep(3), 2000);
-    }
-  };
-
-  const handleConfirmPin = () => {
-    if (pin === "1234") {
-      setPaymentStep(4);
-    } else {
-      alert("Invalid PIN. Please enter 1234 as demo PIN.");
+      setTimeout(() => setPaymentStep(4), 2000);
     }
   };
 
@@ -373,27 +364,6 @@ export default function StudentDashboard() {
                 {paymentStep === 2 && (
                   <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
                     <p className="text-sm text-amber-700 mb-2">Processing payment...</p>
-                  </div>
-                )}
-
-                {paymentStep === 3 && (
-                  <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">Enter PIN to Confirm</label>
-                    <input
-                      type="password"
-                      value={pin}
-                      onChange={(e) => setPin(e.target.value)}
-                      maxLength={4}
-                      className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald-400"
-                      placeholder="4-digit PIN"
-                    />
-                    <p className="text-xs text-slate-400 mt-2">Demo PIN: 1234</p>
-                    <button
-                      onClick={handleConfirmPin}
-                      className="w-full mt-4 py-3 bg-emerald-500 text-white rounded-xl font-medium hover:bg-emerald-600"
-                    >
-                      Confirm Booking
-                    </button>
                   </div>
                 )}
 
