@@ -69,6 +69,7 @@ export default function AdminDashboard() {
   const [hostels, setHostels] = useState<Hostel[]>(INITIAL_HOSTELS);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [saveMessage, setSaveMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   
   const [formData, setFormData] = useState({
     name: "",
@@ -127,8 +128,9 @@ export default function AdminDashboard() {
       setHostels([...hostels, newHostel]);
     }
 
+    setSaveMessage({ type: "success", text: editingId ? "Hostel updated successfully!" : "Hostel added successfully!" });
+    setTimeout(() => setSaveMessage(null), 3000);
     resetForm();
-    alert(editingId ? "Hostel updated successfully!" : "Hostel added successfully!");
   };
 
   const resetForm = () => {
@@ -211,6 +213,15 @@ export default function AdminDashboard() {
               </div>
             ))}
           </div>
+
+          {/* Save Message */}
+          {saveMessage && (
+            <div className={`mb-4 p-4 rounded-xl ${
+              saveMessage.type === "success" ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"
+            }`}>
+              {saveMessage.text}
+            </div>
+          )}
 
           {/* Add/Edit Button */}
           <div className="flex justify-between items-center mb-6">
