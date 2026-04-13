@@ -77,12 +77,12 @@ export default function CustodianLogin() {
           ...updatedHostels[hostelIndex],
           custodianName,
           custodianEmail: email.toLowerCase(),
-          custodianPassword: password,
+          custodianPassword: "1234",
         };
         setHostels(updatedHostels);
       }
 
-      setSuccess("Account created successfully!");
+      setSuccess("Account created! Password is 1234");
       setLoading(false);
       setMode("signin");
       setEmail("");

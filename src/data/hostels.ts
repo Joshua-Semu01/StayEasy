@@ -32,7 +32,7 @@ export const INITIAL_HOSTELS: Hostel[] = [
     totalRooms: 20,
     custodianName: "Mr. John Odea",
     custodianEmail: "carleton@hostel.com",
-    custodianPassword: "carleton123",
+    custodianPassword: "1234",
   },
   {
     id: 2,
@@ -49,7 +49,7 @@ export const INITIAL_HOSTELS: Hostel[] = [
     totalRooms: 15,
     custodianName: "Mrs. Sarah Akello",
     custodianEmail: "premium@hostel.com",
-    custodianPassword: "premium123",
+    custodianPassword: "1234",
   },
   {
     id: 3,
