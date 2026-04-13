@@ -34,7 +34,7 @@ const INITIAL_HOSTELS: Hostel[] = [
     rating: 4.5,
     description: "Standard and affordable hostel rooms in Mukono for UCU students. Clean, secure, and convenient location near the university.",
     amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
-    images: ["https://images.unsplash.com/photo-1555854877-bab0e564d8e5?w=800"],
+    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/bcf623fc-72aa-43c4-8691-6a60e6a57e77.jpg"],
     location: "Mukono, near UCU Main Gate",
     rooms: 4,
     totalRooms: 20,

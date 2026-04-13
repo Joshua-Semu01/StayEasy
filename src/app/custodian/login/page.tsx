@@ -34,7 +34,7 @@ let HOSTELS: HostelData[] = [
     rating: 4.5,
     description: "Standard and affordable hostel rooms in Mukono for UCU students.",
     amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
-    images: ["https://images.unsplash.com/photo-1555854877-bab0e564d8e5?w=800"],
+    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/bcf623fc-72aa-43c4-8691-6a60e6a57e77.jpg"],
     location: "Mukono, near UCU Main Gate",
     rooms: 4,
     totalRooms: 20,
@@ -59,31 +59,100 @@ let HOSTELS: HostelData[] = [
     custodianEmail: "premium@hostel.com",
     custodianPassword: "premium123",
   },
+  {
+    id: 3,
+    name: "Pameja Girls Hostel",
+    price: 1500000,
+    distance: "1.2 km from UCU",
+    available: true,
+    rating: 4.8,
+    description: "Quality standard hostel accommodation near Lake Victoria in Mukono.",
+    amenities: ["Wi-Fi", "Security", "En-Suite", "Gym", "Rooftop", "Water"],
+    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/23160cab-6a5e-4131-8da9-c1251a8cc1df.jpg"],
+    location: "Mukono, Lake Victoria Road",
+    rooms: 3,
+    totalRooms: 12,
+    custodianName: "",
+    custodianEmail: "",
+    custodianPassword: "",
+  },
 ];
 
 export default function CustodianLogin() {
   const router = useRouter();
+  const [selectedHostel, setSelectedHostel] = useState<number | null>(null);
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [custodianName, setCustodianName] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const selectedHostelData = HOSTELS.find((h) => h.id === selectedHostel);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
 
-    const hostel = HOSTELS.find(
-      (h) =>
-        h.custodianEmail.toLowerCase() === email.toLowerCase() &&
-        h.custodianPassword === password
-    );
+    if (!selectedHostelData) {
+      setError("Please select a hostel");
+      return;
+    }
 
-    if (hostel) {
-      router.push(`/custodian/${hostel.id}`);
+    if (mode === "signin") {
+      setLoading(true);
+      setError("");
+
+      if (
+        selectedHostelData.custodianEmail.toLowerCase() === email.toLowerCase() &&
+        selectedHostelData.custodianPassword === password
+      ) {
+        router.push(`/custodian/${selectedHostelData.id}`);
+      } else {
+        setError("Invalid email or password");
+        setLoading(false);
+      }
     } else {
-      setError("Invalid email or password");
+      setLoading(true);
+      setError("");
+      setSuccess("");
+
+      if (password !== confirmPassword) {
+        setError("Passwords do not match");
+        setLoading(false);
+        return;
+      }
+
+      if (!custodianName || !email || !password) {
+        setError("Please fill all fields");
+        setLoading(false);
+        return;
+      }
+
+      if (selectedHostelData.custodianEmail) {
+        setError("This hostel already has an account. Please sign in.");
+        setLoading(false);
+        return;
+      }
+
+      const hostelIndex = HOSTELS.findIndex((h) => h.id === selectedHostel);
+      if (hostelIndex !== -1) {
+        HOSTELS[hostelIndex] = {
+          ...HOSTELS[hostelIndex],
+          custodianName,
+          custodianEmail: email.toLowerCase(),
+          custodianPassword: password,
+        };
+      }
+
+      setSuccess("Account created successfully!");
       setLoading(false);
+      setMode("signin");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setCustodianName("");
     }
   };
 
@@ -96,15 +165,64 @@ export default function CustodianLogin() {
               <img src={LOGO_URL} alt="StayEasy Logo" className="w-full h-full object-contain" />
             </div>
           </Link>
-          <h1 className="text-white font-bold text-2xl">Custodian Login</h1>
-          <p className="text-blue-200 text-sm mt-1">Sign in to manage your hostel</p>
+          <h1 className="text-white font-bold text-2xl">Custodian Dashboard</h1>
+          <p className="text-blue-200 text-sm mt-1">Manage your hostel</p>
         </div>
 
         <div className="bg-white rounded-2xl p-6 shadow-xl">
+          <div className="flex border-b border-slate-200 mb-4">
+            <button
+              onClick={() => { setMode("signin"); setError(""); setSuccess(""); }}
+              className={`flex-1 py-2 text-sm font-medium transition ${
+                mode === "signin" ? "text-orange-500 border-b-2 border-orange-500" : "text-slate-500"
+              }`}
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => { setMode("signup"); setError(""); setSuccess(""); }}
+              className={`flex-1 py-2 text-sm font-medium transition ${
+                mode === "signup" ? "text-orange-500 border-b-2 border-orange-500" : "text-slate-500"
+              }`}
+            >
+              Sign Up
+            </button>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg">
-                {error}
+            <div>
+              <label className="block text-sm font-medium text-slate-600 mb-1">
+                Select Hostel
+              </label>
+              <select
+                value={selectedHostel || ""}
+                onChange={(e) => {
+                  setSelectedHostel(e.target.value ? parseInt(e.target.value) : null);
+                  setError("");
+                }}
+                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
+              >
+                <option value="">Choose a hostel</option>
+                {HOSTELS.map((h) => (
+                  <option key={h.id} value={h.id}>
+                    {h.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {mode === "signup" && (
+              <div>
+                <label className="block text-sm font-medium text-slate-600 mb-1">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  value={custodianName}
+                  onChange={(e) => setCustodianName(e.target.value)}
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
+                  placeholder="e.g. John Odea"
+                />
               </div>
             )}
 
@@ -118,7 +236,7 @@ export default function CustodianLogin() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
-                placeholder="carleton@hostel.com"
+                placeholder="your email"
               />
             </div>
 
@@ -136,6 +254,33 @@ export default function CustodianLogin() {
               />
             </div>
 
+            {mode === "signup" && (
+              <div>
+                <label className="block text-sm font-medium text-slate-600 mb-1">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
+                  placeholder="Confirm your password"
+                />
+              </div>
+            )}
+
+            {error && (
+              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg">
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div className="bg-green-50 text-green-600 text-sm p-3 rounded-lg">
+                {success}
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={loading}
@@ -145,7 +290,13 @@ export default function CustodianLogin() {
                   : "bg-orange-500 text-white hover:bg-orange-600"
               }`}
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading
+                ? mode === "signin"
+                  ? "Signing in..."
+                  : "Creating account..."
+                : mode === "signin"
+                ? "Sign In"
+                : "Sign Up"}
             </button>
           </form>
 
@@ -158,10 +309,6 @@ export default function CustodianLogin() {
             </Link>
           </div>
         </div>
-
-        <p className="text-center text-blue-400 text-xs mt-6">
-          Contact admin to get login credentials
-        </p>
       </div>
     </div>
   );

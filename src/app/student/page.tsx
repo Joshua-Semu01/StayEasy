@@ -31,7 +31,7 @@ const HOSTELS: Hostel[] = [
     rating: 4.5,
     description: "Standard and affordable hostel rooms in Mukono for UCU students. Clean, secure, and convenient location near the university.",
     amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
-    images: ["https://images.unsplash.com/photo-1555854877-bab0e564d8e5?w=800"],
+    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/bcf623fc-72aa-43c4-8691-6a60e6a57e77.jpg"],
     location: "Mukono, near UCU Main Gate",
     rooms: 4,
     totalRooms: 20,
@@ -52,16 +52,16 @@ const HOSTELS: Hostel[] = [
   },
   {
     id: 3,
-    name: "Mukono Budget Hostel",
+    name: "Pameja Girls Hostel",
     price: 1500000,
     distance: "1.2 km from UCU",
-    available: false,
+    available: true,
     rating: 4.8,
     description: "Quality standard hostel accommodation near Lake Victoria in Mukono. Clean rooms with essential amenities.",
     amenities: ["Wi-Fi", "Security", "En-Suite", "Gym", "Rooftop", "Water"],
-    images: ["https://images.unsplash.com/photo-1512918728678-edcb2f899f5f?w=800"],
+    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/23160cab-6a5e-4131-8da9-c1251a8cc1df.jpg"],
     location: "Mukono, Lake Victoria Road",
-    rooms: 0,
+    rooms: 3,
     totalRooms: 12,
   },
   {
@@ -119,6 +119,7 @@ function ReceiptTemplate({
   bookingDate,
   studentName,
   studentPhone,
+  amountPaid,
 }: {
   innerRef: React.Ref<HTMLDivElement>;
   hostel: Hostel;
@@ -126,6 +127,7 @@ function ReceiptTemplate({
   bookingDate: string;
   studentName: string;
   studentPhone: string;
+  amountPaid: number;
 }) {
   return (
     <div
@@ -140,10 +142,8 @@ function ReceiptTemplate({
       }}
     >
       <div style={{ background: "linear-gradient(135deg,#10b981,#059669)", padding: "24px", color: "#fff" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <div style={{ width: 36, height: 36, backgroundColor: "#fff", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ color: "#10b981", fontWeight: 900, fontSize: 18 }}>S</span>
-          </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <img src="https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/e23a92f2-c404-4f22-8678-b168d3c6ff5f.jpg" alt="StayEasy" style={{ width: 40, height: 40, borderRadius: 10, objectFit: "cover", backgroundColor: "#fff", padding: 3 }} />
           <div>
             <div style={{ fontWeight: 900, fontSize: 18 }}>StayEasy</div>
             <div style={{ fontSize: 11, opacity: 0.8 }}>Booking Receipt</div>
@@ -169,8 +169,8 @@ function ReceiptTemplate({
       </div>
 
       <div style={{ margin: "0 24px", backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 12, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ color: "#065f46", fontSize: 13, fontWeight: 600 }}>Total Paid</span>
-        <span style={{ color: "#059669", fontSize: 22, fontWeight: 900 }}>UGX {hostel.price.toLocaleString()}</span>
+        <span style={{ color: "#065f46", fontSize: 13, fontWeight: 600 }}>Amount Paid</span>
+        <span style={{ color: "#059669", fontSize: 22, fontWeight: 900 }}>UGX {amountPaid.toLocaleString()}</span>
       </div>
 
       <div style={{ margin: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -194,6 +194,8 @@ export default function StudentDashboard() {
   const [paymentStep, setPaymentStep] = useState<1 | 2 | 4>(1);
   const [studentName, setStudentName] = useState("");
   const [studentPhone, setStudentPhone] = useState("");
+  const [paymentType, setPaymentType] = useState<"full" | "half">("full");
+  const [amountPaid, setAmountPaid] = useState(0);
   const [downloading, setDownloading] = useState(false);
   const receiptRef = useRef<HTMLDivElement>(null);
   const [bookingRef] = useState(() => `SE${Math.floor(Math.random() * 900000 + 100000)}`);
@@ -226,6 +228,8 @@ export default function StudentDashboard() {
 
   const handlePayment = () => {
     if (studentName && studentPhone) {
+      const amount = paymentType === "half" ? selectedHostel!.price / 2 : selectedHostel!.price;
+      setAmountPaid(amount);
       setPaymentStep(2);
       setTimeout(() => {
         setPaymentStep(4);
@@ -236,7 +240,9 @@ export default function StudentDashboard() {
 
   if (view === "success" && selectedHostel) {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col">
+      <div className="min-h-screen flex flex-col relative">
+        <img src="https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/9080b4ef-f6dc-4a32-bedf-3c3242db6398.jpg" alt="" className="fixed inset-0 w-full h-full object-cover -z-10" />
+        <div className="fixed inset-0 bg-blue-900/80 -z-10" />
         <ReceiptTemplate
           innerRef={receiptRef}
           hostel={selectedHostel}
@@ -244,6 +250,7 @@ export default function StudentDashboard() {
           bookingDate={bookingDate}
           studentName={studentName}
           studentPhone={studentPhone}
+          amountPaid={amountPaid}
         />
 
         <header className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
@@ -261,7 +268,7 @@ export default function StudentDashboard() {
           </Link>
         </header>
 
-        <main className="flex-1 flex items-center justify-center p-6">
+        <main className="flex-1 flex items-center justify-center p-6 relative z-10">
           <div className="max-w-md w-full text-center">
             <div className="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
               <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -269,12 +276,12 @@ export default function StudentDashboard() {
               </svg>
             </div>
             
-            <h2 className="text-2xl font-black text-slate-800 mb-2">Booking Successful!</h2>
-            <p className="text-blue-600 font-medium mb-6">Welcome to {selectedHostel.name}</p>
+            <h2 className="text-2xl font-black text-white mb-2">Booking Successful!</h2>
+            <p className="text-green-400 font-medium mb-6">Welcome to {selectedHostel.name}</p>
 
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 mb-6 text-left">
-              <p className="text-xs text-slate-500 mb-2">Booking Reference</p>
-              <p className="text-lg font-bold text-slate-800">#{bookingRef}</p>
+            <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-white/20 mb-6 text-left">
+              <p className="text-xs text-blue-100 mb-2">Booking Reference</p>
+              <p className="text-lg font-bold text-white">#{bookingRef}</p>
             </div>
 
             <div className="space-y-3">
@@ -337,7 +344,25 @@ export default function StudentDashboard() {
             <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 mb-6">
               <h3 className="font-bold text-slate-800">{selectedHostel.name}</h3>
               <p className="text-sm text-slate-500">{selectedHostel.location}</p>
-              <p className="text-green-600 font-black text-xl mt-2">UGX {selectedHostel.price.toLocaleString()}</p>
+              
+              <div className="mt-3 flex gap-2">
+                <button
+                  onClick={() => { setPaymentType("full"); setAmountPaid(selectedHostel.price); }}
+                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition ${
+                    paymentType === "full" ? "bg-green-600 text-white" : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  Full: UGX {selectedHostel.price.toLocaleString()}
+                </button>
+                <button
+                  onClick={() => { setPaymentType("half"); setAmountPaid(selectedHostel.price / 2); }}
+                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition ${
+                    paymentType === "half" ? "bg-green-600 text-white" : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  Half: UGX {(selectedHostel.price / 2).toLocaleString()}
+                </button>
+              </div>
             </div>
 
             <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-100">
@@ -393,7 +418,7 @@ export default function StudentDashboard() {
               <ol className="text-slate-400 text-xs mt-2 space-y-1">
                 <li>1. Dial *165# on MTN</li>
                 <li>2. Select &quot;Pay Bill&quot;</li>
-                <li>3. Enter amount: {selectedHostel.price.toLocaleString()}</li>
+                <li>3. Enter amount: {(paymentType === "half" ? selectedHostel.price / 2 : selectedHostel.price).toLocaleString()}</li>
                 <li>4. Enter PIN to confirm</li>
               </ol>
             </div>

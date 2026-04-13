@@ -18,6 +18,7 @@ interface Room {
   studentCourse?: string;
   checkInDate?: string;
   rentPaid: boolean;
+  image: string;
 }
 
 interface Hostel {
@@ -48,7 +49,7 @@ const HOSTELS: Hostel[] = [
     rating: 4.5,
     description: "Standard and affordable hostel rooms in Mukono for UCU students.",
     amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
-    images: ["https://images.unsplash.com/photo-1555854877-bab0e564d8e5?w=800"],
+    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/bcf623fc-72aa-43c4-8691-6a60e6a57e77.jpg"],
     location: "Mukono, near UCU Main Gate",
     rooms: 4,
     totalRooms: 20,
@@ -77,15 +78,25 @@ const HOSTELS: Hostel[] = [
 
 let nextRoomId = 10;
 
+// prettier-ignore
+const ROOM_IMAGES = [
+  "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/20257eac-637c-42d7-9cc1-ed8e54cecb92.jpg",
+  "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/4e036ba3-1ae3-4c34-a3c5-f0c2874006c9.jpg",
+  "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/20b8d574-bf15-48f4-9155-7156496430a9.jpg",
+  "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/ed7f8287-8d18-43be-98ba-a1cd00d4be91.jpg",
+  "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/67983956-74c0-4774-832b-b509bb5ce839.jpg",
+  "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/dfc84048-a593-4589-9d23-21f5ec44a7f0.jpg",
+];
+
 let roomsData: Room[] = [
-  { id: 1, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 101, type: "single", status: "occupied", studentName: "John Kato", studentPhone: "0771234567", studentCourse: "BSC Computer Science", checkInDate: "2026-01-15", rentPaid: true },
-  { id: 2, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 102, type: "double", status: "available", rentPaid: false },
-  { id: 3, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 103, type: "single", status: "occupied", studentName: "Sarah Nakato", studentPhone: "0782345678", studentCourse: "BA Law", checkInDate: "2026-02-01", rentPaid: true },
-  { id: 4, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 104, type: "single", status: "available", rentPaid: false },
-  { id: 5, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 105, type: "double", status: "available", rentPaid: false },
-  { id: 6, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 201, type: "shared", status: "maintenance", rentPaid: false },
-  { id: 7, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 202, type: "double", status: "occupied", studentName: "Peter Okello", studentPhone: "0753456789", studentCourse: "BSC Engineering", checkInDate: "2026-01-20", rentPaid: false },
-  { id: 8, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 203, type: "single", status: "available", rentPaid: false },
+  { id: 1, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 101, type: "single", status: "occupied", studentName: "John Kato", studentPhone: "0771234567", studentCourse: "BSC Computer Science", checkInDate: "2026-01-15", rentPaid: true, image: ROOM_IMAGES[0] },
+  { id: 2, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 102, type: "double", status: "available", rentPaid: false, image: ROOM_IMAGES[1] },
+  { id: 3, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 103, type: "single", status: "occupied", studentName: "Sarah Nakato", studentPhone: "0782345678", studentCourse: "BA Law", checkInDate: "2026-02-01", rentPaid: true, image: ROOM_IMAGES[2] },
+  { id: 4, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 104, type: "single", status: "available", rentPaid: false, image: ROOM_IMAGES[3] },
+  { id: 5, hostelId: 1, hostelName: "Carleton Hostel", roomNumber: 105, type: "double", status: "available", rentPaid: false, image: ROOM_IMAGES[0] },
+  { id: 6, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 201, type: "shared", status: "maintenance", rentPaid: false, image: ROOM_IMAGES[1] },
+  { id: 7, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 202, type: "double", status: "occupied", studentName: "Peter Okello", studentPhone: "0753456789", studentCourse: "BSC Engineering", checkInDate: "2026-01-20", rentPaid: false, image: ROOM_IMAGES[2] },
+  { id: 8, hostelId: 2, hostelName: "Premium Hostel", roomNumber: 203, type: "single", status: "available", rentPaid: false, image: ROOM_IMAGES[3] },
 ];
 
 export default function CustodianDashboard() {
@@ -139,6 +150,7 @@ export default function CustodianDashboard() {
       type: roomForm.type,
       status: "available",
       rentPaid: false,
+      image: ROOM_IMAGES[Math.floor(Math.random() * ROOM_IMAGES.length)],
     };
 
     roomsData = [...roomsData, newRoom];

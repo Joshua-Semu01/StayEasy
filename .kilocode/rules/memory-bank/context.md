@@ -15,6 +15,11 @@ The template is a clean Next.js 16 starter with TypeScript and Tailwind CSS 4. I
 - [x] Memory bank documentation
 - [x] Recipe system for common features
 - [x] **StayEasy** student hostel booking app — full 6-screen mobile UI with welcome page
+- [x] Role-based 3-dashboard system (Admin, Custodian, Student)
+- [x] Admin dashboard with hostel + custodian management
+- [x] Custodian dashboard showing specific hostel's rooms
+- [x] Student dashboard with booking flow + payment
+- [x] Updated Carleton Hostel image to uploaded image
 
 ## Current Structure
 
