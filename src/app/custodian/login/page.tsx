@@ -82,7 +82,7 @@ export default function CustodianLogin() {
         setHostels(updatedHostels);
       }
 
-      setSuccess("Account created! Password is 1234");
+      setSuccess("Account created successfully!");
       setLoading(false);
       setMode("signin");
       setEmail("");
