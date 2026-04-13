@@ -20,11 +20,11 @@ export default function CustodianLogin() {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const selectedHostelData = hostels.find((h) => h.id === selectedHostel);
+
   const handleRefresh = () => {
     setHostels(getHostels());
   };
-
-  const selectedHostelData = hostels.find((h) => h.id === selectedHostel);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,25 +126,36 @@ export default function CustodianLogin() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-600 mb-1">
-                Select Hostel
-              </label>
-              <select
-                value={selectedHostel || ""}
-                onChange={(e) => {
-                  setSelectedHostel(e.target.value ? parseInt(e.target.value) : null);
-                  setError("");
-                }}
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
+            <div className="flex gap-2">
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-slate-600 mb-1">
+                  Select Hostel
+                </label>
+                <select
+                  value={selectedHostel || ""}
+                  onChange={(e) => {
+                    setSelectedHostel(e.target.value ? parseInt(e.target.value) : null);
+                    setError("");
+                    handleRefresh();
+                  }}
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
+                >
+                  <option value="">Choose a hostel</option>
+                  {hostels.map((h) => (
+                    <option key={h.id} value={h.id}>
+                      {h.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button
+                type="button"
+                onClick={handleRefresh}
+                className="self-end px-3 py-2 bg-blue-100 text-blue-600 rounded-lg text-sm hover:bg-blue-200"
+                title="Refresh list"
               >
-                <option value="">Choose a hostel</option>
-                {hostels.map((h) => (
-                  <option key={h.id} value={h.id}>
-                    {h.name}
-                  </option>
-                ))}
-              </select>
+                ↻
+              </button>
             </div>
 
             {mode === "signup" && (
