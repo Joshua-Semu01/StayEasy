@@ -8,10 +8,10 @@ function RoleSelectionScreen() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex flex-col items-center justify-center px-6 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/0154ed98-14b7-4881-9883-e1eb7f6e070a.jpg')] bg-cover bg-center" />
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-green-900/60" />
-      <div className="absolute -top-20 -right-20 w-80 h-80 bg-orange-500/20 rounded-full pointer-events-none blur-xl" />
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-green-600/20 rounded-full pointer-events-none blur-xl" />
-      <div className="absolute top-1/2 left-1/4 w-40 h-40 bg-blue-500/15 rounded-full pointer-events-none blur-lg" />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-blue-800/30 to-green-900/20" />
+      <div className="absolute -top-20 -right-20 w-80 h-80 bg-orange-500/10 rounded-full pointer-events-none blur-xl" />
+      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-green-600/10 rounded-full pointer-events-none blur-xl" />
+      <div className="absolute top-1/2 left-1/4 w-40 h-40 bg-blue-500/10 rounded-full pointer-events-none blur-lg" />
       
       <div className="relative z-10 text-center max-w-lg">
         <div className="w-24 h-24 mx-auto mb-6 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-500/30 overflow-hidden">
