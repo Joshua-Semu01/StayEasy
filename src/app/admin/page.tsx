@@ -1,75 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getHostels, addHostel, updateHostel, deleteHostel, getNextId, Hostel } from "../../data/hostels";
 
 const LOGO_URL = "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/e23a92f2-c404-4f22-8678-b168d3c6ff5f.jpg";
 
-interface Hostel {
-  id: number;
-  name: string;
-  price: number;
-  distance: string;
-  available: boolean;
-  rating: number;
-  description: string;
-  amenities: string[];
-  images: string[];
-  location: string;
-  rooms: number;
-  totalRooms: number;
-  custodianName: string;
-  custodianEmail: string;
-  custodianPassword: string;
-}
-
-const INITIAL_HOSTELS: Hostel[] = [
-  {
-    id: 1,
-    name: "Carleton Hostel",
-    price: 1000000,
-    distance: "0.3 km from UCU",
-    available: true,
-    rating: 4.5,
-    description: "Standard and affordable hostel rooms in Mukono for UCU students. Clean, secure, and convenient location near the university.",
-    amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
-    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/bcf623fc-72aa-43c4-8691-6a60e6a57e77.jpg"],
-    location: "Mukono, near UCU Main Gate",
-    rooms: 4,
-    totalRooms: 20,
-    custodianName: "Mr. John Odea",
-    custodianEmail: "carleton@hostel.com",
-    custodianPassword: "carleton123",
-  },
-  {
-    id: 2,
-    name: "Premium Hostel",
-    price: 1500000,
-    distance: "0.8 km from UCU",
-    available: true,
-    rating: 4.2,
-    description: "Affordable standard hostel rooms in Mukono town. Great community atmosphere with shared kitchen and study area.",
-    amenities: ["Wi-Fi", "Security", "Water", "Study Room", "Kitchen"],
-    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/d107fb98-8dd1-46d1-945f-2718eb5d1ace.jpg"],
-    location: "Mukono Town, 5 min walk to UCU",
-    rooms: 2,
-    totalRooms: 15,
-    custodianName: "Mrs. Sarah Akello",
-    custodianEmail: "premium@hostel.com",
-    custodianPassword: "premium123",
-  },
-];
-
 const AVAILABLE_AMENITIES = ["Wi-Fi", "Security", "Water", "Electricity", "Parking", "Study Room", "Kitchen", "En-Suite", "Gym", "Rooftop", "Laundry", "TV Lounge"];
 
-let nextId = 3;
+let nextId = 4;
 
 export default function AdminDashboard() {
-  const [hostels, setHostels] = useState<Hostel[]>(INITIAL_HOSTELS);
+  const [hostels, setHostels] = useState<Hostel[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [saveMessage, setSaveMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  useEffect(() => {
+    setHostels(getHostels());
+  }, []);
   
   const [formData, setFormData] = useState({
     name: "",
@@ -123,10 +73,12 @@ export default function AdminDashboard() {
     };
 
     if (editingId) {
-      setHostels(hostels.map(h => h.id === editingId ? newHostel : h));
+      addHostel(newHostel);
     } else {
-      setHostels([...hostels, newHostel]);
+      addHostel(newHostel);
     }
+
+    setHostels(getHostels());
 
     setSaveMessage({ type: "success", text: editingId ? "Hostel updated successfully!" : "Hostel added successfully!" });
     setTimeout(() => setSaveMessage(null), 3000);
@@ -171,12 +123,17 @@ export default function AdminDashboard() {
 
   const handleDelete = (id: number) => {
     if (confirm("Are you sure you want to delete this hostel?")) {
-      setHostels(hostels.filter(h => h.id !== id));
+      deleteHostel(id);
+      setHostels(getHostels());
     }
   };
 
   const toggleAvailability = (id: number) => {
-    setHostels(hostels.map(h => h.id === id ? { ...h, available: !h.available } : h));
+    const hostel = hostels.find(h => h.id === id);
+    if (hostel) {
+      updateHostel(id, { available: !hostel.available });
+      setHostels(getHostels());
+    }
   };
 
   return (

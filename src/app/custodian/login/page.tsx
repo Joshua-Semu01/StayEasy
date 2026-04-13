@@ -3,83 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getHostels, Hostel } from "../../../data/hostels";
 
 const LOGO_URL = "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/e23a92f2-c404-4f22-8678-b168d3c6ff5f.jpg";
 
-interface HostelData {
-  id: number;
-  name: string;
-  price: number;
-  distance: string;
-  available: boolean;
-  rating: number;
-  description: string;
-  amenities: string[];
-  images: string[];
-  location: string;
-  rooms: number;
-  totalRooms: number;
-  custodianName: string;
-  custodianEmail: string;
-  custodianPassword: string;
-}
-
-let HOSTELS: HostelData[] = [
-  {
-    id: 1,
-    name: "Carleton Hostel",
-    price: 1000000,
-    distance: "0.3 km from UCU",
-    available: true,
-    rating: 4.5,
-    description: "Standard and affordable hostel rooms in Mukono for UCU students.",
-    amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
-    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/bcf623fc-72aa-43c4-8691-6a60e6a57e77.jpg"],
-    location: "Mukono, near UCU Main Gate",
-    rooms: 4,
-    totalRooms: 20,
-    custodianName: "Mr. John Odea",
-    custodianEmail: "carleton@hostel.com",
-    custodianPassword: "carleton123",
-  },
-  {
-    id: 2,
-    name: "Premium Hostel",
-    price: 1500000,
-    distance: "0.8 km from UCU",
-    available: true,
-    rating: 4.2,
-    description: "Affordable standard hostel rooms in Mukono town.",
-    amenities: ["Wi-Fi", "Security", "Water", "Study Room", "Kitchen"],
-    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/d107fb98-8dd1-46d1-945f-2718eb5d1ace.jpg"],
-    location: "Mukono Town, 5 min walk to UCU",
-    rooms: 2,
-    totalRooms: 15,
-    custodianName: "Mrs. Sarah Akello",
-    custodianEmail: "premium@hostel.com",
-    custodianPassword: "premium123",
-  },
-  {
-    id: 3,
-    name: "Pameja Girls Hostel",
-    price: 1500000,
-    distance: "1.2 km from UCU",
-    available: true,
-    rating: 4.8,
-    description: "Quality standard hostel accommodation near Lake Victoria in Mukono.",
-    amenities: ["Wi-Fi", "Security", "En-Suite", "Gym", "Rooftop", "Water"],
-    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/23160cab-6a5e-4131-8da9-c1251a8cc1df.jpg"],
-    location: "Mukono, Lake Victoria Road",
-    rooms: 3,
-    totalRooms: 12,
-    custodianName: "",
-    custodianEmail: "",
-    custodianPassword: "",
-  },
-];
-
 export default function CustodianLogin() {
   const router = useRouter();
+  const [hostels, setHostels] = useState<Hostel[]>(getHostels());
   const [selectedHostel, setSelectedHostel] = useState<number | null>(null);
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
@@ -90,7 +20,11 @@ export default function CustodianLogin() {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const selectedHostelData = HOSTELS.find((h) => h.id === selectedHostel);
+  const handleRefresh = () => {
+    setHostels(getHostels());
+  };
+
+  const selectedHostelData = hostels.find((h) => h.id === selectedHostel);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,14 +70,16 @@ export default function CustodianLogin() {
         return;
       }
 
-      const hostelIndex = HOSTELS.findIndex((h) => h.id === selectedHostel);
+      const hostelIndex = hostels.findIndex((h) => h.id === selectedHostel);
       if (hostelIndex !== -1) {
-        HOSTELS[hostelIndex] = {
-          ...HOSTELS[hostelIndex],
+        const updatedHostels = [...hostels];
+        updatedHostels[hostelIndex] = {
+          ...updatedHostels[hostelIndex],
           custodianName,
           custodianEmail: email.toLowerCase(),
           custodianPassword: password,
         };
+        setHostels(updatedHostels);
       }
 
       setSuccess("Account created successfully!");
@@ -203,7 +139,7 @@ export default function CustodianLogin() {
                 className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400"
               >
                 <option value="">Choose a hostel</option>
-                {HOSTELS.map((h) => (
+                {hostels.map((h) => (
                   <option key={h.id} value={h.id}>
                     {h.name}
                   </option>
