@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { getHostels, Hostel } from "../../../data/hostels";
 
 const LOGO_URL = "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/e23a92f2-c404-4f22-8678-b168d3c6ff5f.jpg";
 
@@ -20,61 +21,6 @@ interface Room {
   rentPaid: boolean;
   image: string;
 }
-
-interface Hostel {
-  id: number;
-  name: string;
-  price: number;
-  distance: string;
-  available: boolean;
-  rating: number;
-  description: string;
-  amenities: string[];
-  images: string[];
-  location: string;
-  rooms: number;
-  totalRooms: number;
-  custodianName: string;
-  custodianEmail: string;
-  custodianPassword: string;
-}
-
-const HOSTELS: Hostel[] = [
-  {
-    id: 1,
-    name: "Carleton Hostel",
-    price: 1000000,
-    distance: "0.3 km from UCU",
-    available: true,
-    rating: 4.5,
-    description: "Standard and affordable hostel rooms in Mukono for UCU students.",
-    amenities: ["Wi-Fi", "Security", "Water", "Electricity", "Parking"],
-    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/bcf623fc-72aa-43c4-8691-6a60e6a57e77.jpg"],
-    location: "Mukono, near UCU Main Gate",
-    rooms: 4,
-    totalRooms: 20,
-    custodianName: "Mr. John Odea",
-    custodianEmail: "carleton@hostel.com",
-    custodianPassword: "carleton123",
-  },
-  {
-    id: 2,
-    name: "Premium Hostel",
-    price: 1500000,
-    distance: "0.8 km from UCU",
-    available: true,
-    rating: 4.2,
-    description: "Affordable standard hostel rooms in Mukono town.",
-    amenities: ["Wi-Fi", "Security", "Water", "Study Room", "Kitchen"],
-    images: ["https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/d107fb98-8dd1-46d1-945f-2718eb5d1ace.jpg"],
-    location: "Mukono Town, 5 min walk to UCU",
-    rooms: 2,
-    totalRooms: 15,
-    custodianName: "Mrs. Sarah Akello",
-    custodianEmail: "premium@hostel.com",
-    custodianPassword: "premium123",
-  },
-];
 
 let nextRoomId = 10;
 
@@ -103,8 +49,9 @@ export default function CustodianDashboard() {
   const params = useParams();
   const router = useRouter();
   const hostelId = parseInt(params.id as string);
+  const [hostels, setHostels] = useState<Hostel[]>(getHostels());
   
-  const hostel = HOSTELS.find(h => h.id === hostelId);
+  const hostel = hostels.find(h => h.id === hostelId);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [showAddRoom, setShowAddRoom] = useState(false);
   const [showAssignStudent, setShowAssignStudent] = useState(false);
