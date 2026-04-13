@@ -7,6 +7,8 @@ const LOGO_URL = "https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda768
 function RoleSelectionScreen() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex flex-col items-center justify-center px-6 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://assets.kiloapps.io/user_e36bb1a3-2840-4d55-a410-fda7687ef308/ddc1b378-fff3-4a8c-89b8-1c8be6fbe2d2/0154ed98-14b7-4881-9883-e1eb7f6e070a.jpg')] bg-cover bg-center" />
+      <div className="absolute inset-0 bg-blue-900/70" />
       <div className="absolute -top-20 -right-20 w-80 h-80 bg-orange-500/10 rounded-full pointer-events-none" />
       <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-600/20 rounded-full pointer-events-none" />
       
